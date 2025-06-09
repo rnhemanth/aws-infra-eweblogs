@@ -1,0 +1,255 @@
+name: PRD - Configure - EC2s
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  NAME_PREFIX: "EMELM2EWEBLOGS"                               # Hostname prefix for EWebLogs Production
+  ENVIRONMENT_TYPE: "EM"                                      # EM:England GPLive, NI:Northern Ireland, CM:CCU, JY:Jersey
+  ENVIRONMENT: "prd"                                          # Deployment Environment
+  S3_SETUP_BUCKET_NAME: "prd-eweblogs-migration-plat-s3-setup-491885416742"  # Setup bucket - UPDATE with actual bucket name
+  CROWDSTRIKE_INSTALL_PATH: "C:\\Agents\\CrowdStrike.exe"    # Crowdstrike Installation Path
+  NESSUS_INSTALL_PATH: "C:\\Agents\\NessusAgent.msi"         # Nessus Installation Path
+  PROXY_HOSTNAME: "185.46.212.92"                            # Proxy Hostname
+  PROXY_PORT: "443"                                          # Proxy Port
+  SQL_VERSION: "2022-Standard"                               # 2022-Developer/2019-Developer/2022-Standard/2019-Standard
+  AWS_REGION: "eu-west-2"                                    # AWS Region
+
+jobs:
+  invoke_create_ou:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ["self-hosted", "prd"]
+    environment:
+      name: prd
+    steps:
+      - name: Git config
+        run: |
+          git config --global url.https://token:${{ secrets.GI_TOKEN }}@github.com/emisgroup.insteadOf https://github.com/emisgroup
+          git config --file=.gitmodules github-runner.url https://token:${{ secrets.GI_TOKEN }}@github.com/emisgroup/github-runner.git
+        env:
+          GI_TOKEN: ${{ secrets.RUNNER_BEARER_TOKEN }}
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.RUNNER_BEARER_TOKEN }}
+      - name: Call the pd_ad_action - updating the OU, Groups and Users
+        uses: ./eweblogs/actions/ad_update
+        with:
+          pd-number: "eweblogs"
+          default-secret-name: ${{ secrets.S5_DEFAULT_AD_SECRET_NAME }}
+          environment-type: "eweblogs"
+          authaccessgroup: "eweblogs-auth-db"
+
+  install_nessus:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ["self-hosted", "prd"]
+    needs: ["invoke_create_ou"]
+    environment:
+      name: prd
+    strategy:
+      matrix:
+        hosts: ["SIS001", "SRS001"]  # Only SSIS and SSRS servers
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.RUNNER_BEARER_TOKEN }}
+      - name: install_nessus
+        uses: ./github-runner/actions/install_nessus
+        with:
+          name-prefix: ${{ env.NAME_PREFIX }}
+          pd-number: ${{ matrix.hosts }}
+          full-domain-name: ${{ secrets.FULL_DOMAIN_NAME }}
+          server-hostname: ""
+          install-source: ${{ env.NESSUS_INSTALL_PATH }}
+          key: ${{ secrets.NESSUS_KEY }}
+          proxy-hostname: ${{ env.PROXY_HOSTNAME }}
+          proxy-port: ${{ env.PROXY_PORT }}
+
+  install_crowdstrike:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ["self-hosted", "prd"]
+    needs: ["install_nessus"]
+    environment:
+      name: prd
+    strategy:
+      matrix:
+        hosts:
+          - name: "SIS001"
+            server-type: "DB"
+          - name: "SRS001"
+            server-type: "DB"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.RUNNER_BEARER_TOKEN }}
+      - name: install_crowdstrike
+        uses: ./github-runner/actions/install_crowdstrike
+        with:
+          name-prefix: ${{ env.NAME_PREFIX }}
+          pd-number: ${{ matrix.hosts.name }}
+          full-domain-name: ${{ secrets.FULL_DOMAIN_NAME }}
+          server-hostname: ""
+          environment-type: ${{ env.ENVIRONMENT_TYPE }}
+          server-type: ${{ matrix.hosts.server-type }}
+          install-source: ${{ env.CROWDSTRIKE_INSTALL_PATH }}
+          cid: ${{ secrets.CROWDSTRIKE_CID }}
+          grouping-tag: "EWEBLOGS"
+
+  install_dynatrace:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: ["install_crowdstrike"]
+    environment:
+      name: prd
+    strategy:
+      matrix:
+        hosts: ["SIS001", "SRS001"]  # Only SSIS and SSRS servers
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: deploy-role-session
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: navikt/github-app-token-generator@v1.2.0
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+      - name: install_dynatrace
+        uses: ./github-runner/actions/install_dynatrace
+        with:
+          server-name: ${{ env.NAME_PREFIX }}${{ matrix.hosts }}
+          cost-centre: "eweblogs"
+          product: "eweblogs"
+
+  copy_sql_installers:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    environment:
+      name: prd
+    strategy:
+      matrix:
+        hosts: ["SIS001", "SRS001"]  # Only SSIS and SSRS servers
+    needs: ["install_dynatrace"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: deploy-role-session
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: navikt/github-app-token-generator@v1.2.0
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+      - name: Copy SQL installers
+        run: |
+          echo "Copying SQL installers to EWebLogs servers"
+          NAME=${{ env.NAME_PREFIX }}${{ matrix.hosts }}
+          S3BUCKET=${{ env.S3_SETUP_BUCKET_NAME }}
+          SQLVERSION=SQL-Installer-${{ env.SQL_VERSION }}
+          commandid=$(aws ssm send-command --document-name "AWS-RunPowerShellScript" --targets '[{"Key":"tag:Name","Values":["'$NAME'"]}]' --parameters '{"commands":["$destination_path = \"D:\\SQLInstallers\\\"","New-Item -Path \"$($destination_path)\\SQL\" -Type Directory -Force","Write-Host \"Copying SQL installer to $($destination_path)\\SQL\\\"","Read-S3Object -BucketName \"'$S3BUCKET'\" -KeyPrefix \"$SQLVERSION\" -folder \"$($destination_path)\\SQL\\\"","Write-Host \"Copying SQL CU to $($destination_path)\\CU\\\"","Read-S3Object -BucketName \"'$S3BUCKET'\" -KeyPrefix \"SQL-CU\" -folder \"$($destination_path)\\CU\""]}')
+          sleep 180
+        env:
+          GI_TOKEN: ${{ secrets.RUNNER_BEARER_TOKEN }}
+          HOST: ${{ matrix.hosts }}
+
+  copy_ssms_installers:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    environment:
+      name: prd
+    runs-on: ubuntu-latest
+    needs: ["copy_sql_installers"]
+    strategy:
+      matrix:
+        hosts: ["SIS001", "SRS001"]  # Only SSIS and SSRS servers
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: deploy-role-session
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: navikt/github-app-token-generator@v1.2.0
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+      - name: Copy SSMS to servers
+        run: |
+          echo "Copying SSMS to EWebLogs servers"
+          NAME=${{ env.NAME_PREFIX }}${{ matrix.hosts }}
+          S3BUCKET=${{ env.S3_SETUP_BUCKET_NAME }}
+          commandid=$(aws ssm send-command --document-name "AWS-RunPowerShellScript" --targets '[{"Key":"tag:Name","Values":["'$NAME'"]}]' --parameters '{"commands":["$destination_path = \"C:\\Installers\\\"","New-Item -Path \"$($destination_path)\\SSMS\" -Type Directory -Force","Write-Host \"Copying SSMS installer to $($destination_path)\\SSMS\\\"","Read-S3Object -BucketName \"'$S3BUCKET'\" -Key \"SSMS-Setup-ENU.exe\" -file \"$($destination_path)\\SSMS\\SSMS-Setup-ENU.exe\""]}')
+          sleep 180
+        env:
+          GI_TOKEN: ${{ secrets.RUNNER_BEARER_TOKEN }}
+          HOST: ${{ matrix.hosts }}
+
+  configure_wsus:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: ["copy_ssms_installers"]
+    environment:
+      name: prd
+    strategy:
+      matrix:
+        hosts: ["SIS001", "SRS001"]  # Only SSIS and SSRS servers
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: deploy-role-session
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: navikt/github-app-token-generator@v1.2.0
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.RUNNER_BEARER_TOKEN }}
+      - name: configure_wsus
+        uses: ./github-runner/actions/sydney/configure_wsus
+        with:
+          server-name: ${{ env.NAME_PREFIX }}${{ matrix.hosts }}
+          server-fqdn-A: "EMELM2WSUSDS01.${{ secrets.FULL_DOMAIN_NAME }}"
+          server-fqdn-B: "EMELM2WSUSDS02.${{ secrets.FULL_DOMAIN_NAME }}"
+
+  install_wsus:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: ["configure_wsus"]
+    environment:
+      name: prd
+    strategy:
+      matrix:
+        hosts: ["SIS001", "SRS001"]  # Only SSIS and SSRS servers
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: deploy-role-session
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: navikt/github-app-token-generator@v1.2.0
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+      - name: install_wsus
+        uses: ./github-runner/actions/install_wsus
+        with:
+          server-name: ${{ env.NAME_PREFIX }}${{ matrix.hosts }}
