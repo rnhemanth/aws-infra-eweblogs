@@ -1,0 +1,843 @@
+﻿<COMPLIANCE>
+	<!--Domains CCMH, CP, DevTest, EMISPRDENG, HSCNI, IOM, Jersey, White, EmisGha -->
+	<Area Name="osInfo">
+		<Property Name="Operating System" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Microsoft Windows Server 2019 Datacenter</Property>
+		<Property Name="Domain Name" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">EMISPRDENG</Property>
+		<Property Name="FQDN" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">england.emis-web.com</Property>
+		<Property Name="Processor CPU0 Logical Processor(s)" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="EMISPRDENG" State="Expected" Environment="All">8</Property>
+		<!-- <Property Name="Processor CPU0 Logical Processor(s)" ServerType="ClusterRSDB" os="2019" Domain="EMISPRDENG" State="Expected" Environment="All">2</Property> -->
+		<Property Name="Processor CPU0 Logical Processor(s)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" State="Expected" Environment="All">2</Property>
+		<Property Name="Hyper-Threading" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" State="Expected" Environment="All">Enabled</Property>
+		<Property Name="Hyper-Threading" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="EMISPRDENG" State="Expected" Environment="All">Disabled</Property>
+		<!-- <Property Name="Pagefile Setting" ServerType="App, StandardCombi, ClusterCombi" os="2019" Domain="All" State="Expected" Environment="All">Automatically manage paging file sizes for all drives</Property>
+		<Property Name="Pagefile Setting" ServerType="ClusterDB, DataBase" os="2019" Domain="All" State="Expected" Environment="All">Paging file sizes manually specified for each drive</Property>
+		<Property Name="Pagefile Name C:\pagefile.sys" ServerType="ClusterDB, DataBase" os="2019" Domain="All" State="Expected" Environment="All">Initial Size 8192 Maximum Size 16384</Property> -->
+		<Property Name="Pagefile Setting" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Paging file sizes manually specified for each drive</Property>
+		<Property Name="Pagefile Name C:\pagefile.sys" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Initial Size 8192 Maximum Size 16384</Property>
+		<Property Name="Physical Memory" ServerType="ClusterDB, DataBase" os="2019" Domain="EMISPRDENG" State="Expected, All" Environment="All">126 GB</Property>
+		<Property Name="Physical Memory" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" State="Expected, All" Environment="All">8 GB</Property>
+		<Property Name="Physical Memory" ServerType="ClusterRSDB" os="2019" Domain="EMISPRDENG" State="Expected, All" Environment="All">126 GB</Property>
+		<Property Name="Time Zone" ServerType="All" os="2019" Domain="CCMH, CP, DevTest, ECP, EMISPRDENG, HSCNI, IOM, Jersey, White" State="Expected" Environment="All">(UTC+00:00) Dublin, Edinburgh, Lisbon, London</Property>
+		<Property Name="Locale" ServerType="All" os="2019" Domain="All" State="Expected, All" Environment="All">(en-GB)</Property>
+		<Property Name="Power Plan Setting" ServerType="All" os="2019" Domain="All" State="Expected, All" Environment="All">High performance</Property>
+		<Property Name="Windows License" ServerType="All" os="2019" Domain="All" State="Fail" Environment="All">Not Activated</Property>
+		<Property Name="Windows(R) Operating System, VOLUME_KMSCLIENT channel" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Activated</Property>
+		<Property Name="Applied GPO" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="All" State="Expected" Environment="All">gp-app-settings</Property>
+		<Property Name="Applied GPO" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="All" State="Expected" Environment="All">app-firewall-policy</Property>
+		<Property Name="Applied GPO" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="All" State="Expected" Environment="All">gp-db-settings</Property>
+		<Property Name="Applied GPO" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="All" State="Expected" Environment="All">db-firewall-policy</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">computer-configuration-policy</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">laps-admin-policy</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">laps-client-deploy</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">proxy-policy</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">dns-suffix-search-lists</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Default Domain Policy</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">ServerAdmins</Property>
+		<Property Name="Applied GPO" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Local Group Policy</Property>
+		<Property Name="Local Administrator" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">Administrator</Property>
+		<Property Name="Local Administrator" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">emis-admin</Property>
+		<Property Name="Local Administrator" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">XXDOMAINXX\AWS Delegated Server Administrators</Property>
+		<Property Name="Local Administrator" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">XXDOMAINXX\Domain Admins</Property>
+		<Property Name="Local Administrator" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="All" State="Expected" Environment="All">XXDOMAINXX\pd-auth-app</Property>
+		<Property Name="Local Administrator" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="All" State="Expected" Environment="All">XXDOMAINXX\SQLAgent-XXENVIRONMENTXX$</Property>
+		<Property Name="Local Administrator" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="All" State="Expected" Environment="All">XXDOMAINXX\pd-auth-db</Property>
+		<Property Name="Remote Desktop User" ServerType="All" os="2019" Domain="All" State="Expected" Environment="All">XXDOMAINXX\remote-desktop-users</Property>
+		<Property Name="Domain Firewall" ServerType="All" os="2019" Domain="All" State="Expected, All" Environment="All">OFF</Property>
+		<Property Name="Public Firewall" ServerType="All" os="2019" Domain="All" State="Expected, All" Environment="All">OFF</Property>
+	</Area>
+	<Area Name="NetworkInfo">
+		<NIC NicLabel="Private" ServerType="App, EW-Private, EW-Public" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Gateway>True</Gateway>
+			<Mask>255.255.252.0</Mask>
+			<Status>UP</Status>
+		</NIC>
+		<NIC NicLabel="Private" ServerType="EMAS" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Gateway>True</Gateway>
+			<Mask>255.255.254.0</Mask>
+			<Status>UP</Status>
+		</NIC>
+		<NIC NicLabel="Private" ServerType="ClusterDB, ClusterRSDB, DataBase" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Gateway>True</Gateway>
+			<Mask>255.255.252.0</Mask>
+			<Status>UP</Status>
+		</NIC>
+	</Area>
+	<!--Add the SF DNS server as the primary and LS as secondary script will swap these around based on server name-->
+	<Area Name="DNSInfo">
+		<Domain Name="EMISPRDENG" ServerType="All">
+			<Primary NIC="Private">100.88.32.2</Primary>
+			<!-- <Secondary NIC="Private">192.168.50.25</Secondary> -->
+			<!-- <Tertiary NIC="Private">192.168.50.134</Tertiary> -->
+			<!-- <Quaternary NIC="Private">192.168.50.137</Quaternary> -->
+			<!--<Primary NIC="Private">44.1.162.15</Primary>-->
+			<!--<Secondary NIC="Private">44.1.162.115</Secondary>-->
+		</Domain>
+	</Area>
+	<Area Name="RouteInfo">
+		<Route Destination="169.254.169.123" ServerType="All" os="2019" Domain="EMISPRDENG">
+			<NicLabel>Private</NicLabel>
+			<Mask>255.255.255.255</Mask>
+		</Route>
+		<Route Destination="169.254.169.249" ServerType="All" os="2019" Domain="EMISPRDENG">
+			<NicLabel>Private</NicLabel>
+			<Mask>255.255.255.255</Mask>
+		</Route>
+		<Route Destination="169.254.169.250" ServerType="All" os="2019" Domain="EMISPRDENG">
+			<NicLabel>Private</NicLabel>
+			<Mask>255.255.255.255</Mask>
+		</Route>
+		<Route Destination="169.254.169.251" ServerType="All" os="2019" Domain="EMISPRDENG">
+			<NicLabel>Private</NicLabel>
+			<Mask>255.255.255.255</Mask>
+		</Route>
+		<Route Destination="169.254.169.253" ServerType="All" os="2019" Domain="EMISPRDENG">
+			<NicLabel>Private</NicLabel>
+			<Mask>255.255.255.255</Mask>
+		</Route>
+		<Route Destination="169.254.169.254" ServerType="All" os="2019" Domain="EMISPRDENG">
+			<NicLabel>Private</NicLabel>
+			<Mask>255.255.255.255</Mask>
+		</Route>
+	</Area>
+	<!--DataDog Information-->
+	<Area name="DataDogServices">
+		<Service Name="datadogagent" ServerType="All" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\dd-agent-user$</RunAs>
+		</Service>
+		<!-- The datadog-process-agent service can be stopped or started -->
+		<Service Name="datadog-process-agent" ServerType="All" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<!-- <State>Running</State> -->
+			<Startup>Manual</Startup>
+			<RunAs>LocalSystem</RunAs>
+		</Service>
+		<Service Name="datadog-system-probe" ServerType="All" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<State>Stopped</State>
+			<Startup>Manual</Startup>
+			<RunAs>LocalSystem</RunAs>
+		</Service>
+		<Service Name="datadog-trace-agent" ServerType="All" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<State>Stopped</State>
+			<Startup>Manual</Startup>
+			<RunAs>XXDOMAINXX\dd-agent-user$</RunAs>
+		</Service>
+	</Area>
+	<!--AntiVirus Information-->
+	<Area name="AntiVirus">
+		<!--<Domain CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM>-->
+		<Property Name="AntiVirus Service Name" ServerType="All" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">CrowdStrike Falcon Sensor Service</Property>
+		<Property Name="AntiVirus Service Status" ServerType="All" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">Running</Property>
+		<Property Name="AntiVirus Program Version" ServerType="All" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">6.53.16705.0</Property>
+		<Property Name="CrowdStrike Grouping Tag" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">AWS_HOSTED,EN,EMISWEB-XXENVIRONMENTXX,EMISWEB-APP</Property>
+		<Property Name="CrowdStrike Grouping Tag" ServerType="ClusterDB" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">AWS_HOSTED,EN,EMISWEB-XXENVIRONMENTXX,EMISWEB-DB</Property>
+		<Property Name="CrowdStrike Grouping Tag" ServerType="ClusterRSDB" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">AWS_HOSTED,EN,EMISWEB-XXENVIRONMENTXX,EMISWEB-RS</Property>
+	</Area>
+	<!--Program Information-->
+	<Area name="ProgramInfo">
+		<Property Name="NetBackup Client Program Product" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">Veritas NetBackup Client</Property>
+		<Property Name="NetBackup Client Program Version" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">10.1</Property>
+		<Property Name="Nessus Agent Product" ServerType="All" os="2019">Nessus Agent (x64)</Property>
+		<Property Name="Nessus Agent Version" ServerType="All" os="2019">10.4.3.20005</Property>
+		<Property Name="Datadog Agent Version" ServerType="All" os="2019" Domain="CP, CCMH, EmisGha, EMISPRDENG, HSCNI, IOM" Environment="All">7.47.1.0</Property>
+	</Area>
+	<!--Program Information-->
+	<!-- <Area name="HostFileInfo">
+		<HostFile IPAddress="44.128.203.151" ServerType="App" Domain="CCMH, EMISPRDENG" os="2019" Environment="GP" Site="Production">
+			<HostRecord>catt-england-emis-england-documents.s3.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+		<HostFile IPAddress="44.128.203.152" ServerType="App" Domain="CCMH, EMISPRDENG" os="2019" Environment="GP" Site="Production">
+			<HostRecord>aqg3prulq1.execute-api.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+		<HostFile IPAddress="44.128.203.153" ServerType="App" Domain="CCMH, EMISPRDENG" os="2019" Environment="GP" Site="Production">
+			<HostRecord>bfa0p5wwji.execute-api.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+		<HostFile IPAddress="44.128.219.151" ServerType="App" Domain="CCMH, EMISPRDENG" os="2019" Environment="GP" Site="Failover">
+			<HostRecord>catt-england-emis-england-documents.s3.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+		<HostFile IPAddress="44.128.219.152" ServerType="App" Domain="CCMH, EMISPRDENG" os="2019" Environment="GP" Site="Failover">
+			<HostRecord>aqg3prulq1.execute-api.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+		<HostFile IPAddress="44.128.219.153" ServerType="App" Domain="CCMH, EMISPRDENG" os="2019" Environment="GP" Site="Failover">
+			<HostRecord>bfa0p5wwji.execute-api.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+        <HostFile IPAddress="100.76.1.51" ServerType="App" Domain="EMISPRDENG" os="2019" Environment="STG" Site="Production">
+			<HostRecord>ec2.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+        <HostFile IPAddress="100.76.1.76" ServerType="App" Domain="EMISPRDENG" os="2019" Environment="STG" Site="Production">
+			<HostRecord>ec2messages.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+        <HostFile IPAddress="100.76.1.101" ServerType="App" Domain="EMISPRDENG" os="2019" Environment="STG" Site="Production">
+			<HostRecord>ssmmessages.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+        <HostFile IPAddress="100.76.1.113" ServerType="App" Domain="EMISPRDENG" os="2019" Environment="STG" Site="Production">
+			<HostRecord>ssm.eu-west-2.amazonaws.com</HostRecord>
+		</HostFile>
+	</Area>	 -->
+	<!--SQL Information-->
+	<Area name="SQLInfo">
+		<!--EMISPRDENG 2019 GP DBS-->
+		<SQLInstanceInfo Instance="XXENVIRONMENTXX" ServerType="ClusterDB" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Property Setting="SQL Path">Q:\MSSQL15.ENEUW2XXENVIRONMENTXXDB\MSSQL</Property>
+			<Property Setting="SQL Edition">Enterprise Edition: Core-based Licensing (64-bit)</Property>
+			<Property Setting="SQL Version">15.00.4312 / 5024276 Cumulative update 20 (CU20) for SQL Server 2019</Property>
+			<Property Setting="SQL Max Memory Setting">109 GB</Property>
+			<Property Setting="SQL Max Degree of Parallelism">1</Property>
+			<Property Setting="SQL Max Worker Threads">0</Property>
+			<Property Setting="SQL Server Collation">SQL_Latin1_General_CP1_CI_AS</Property>
+		</SQLInstanceInfo>
+	</Area>
+	<Area name="SQLInfo">
+		<!--EMISPRDENG 2019 GP RS-->
+		<SQLInstanceInfo Instance="XXENVIRONMENTXX" ServerType="ClusterRSDB" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Property Setting="SQL Path">Q:\MSSQL15.ENEUW2XXENVIRONMENTXXRS\MSSQL</Property>
+			<Property Setting="SQL Edition">Enterprise Edition: Core-based Licensing (64-bit)</Property>
+			<Property Setting="SQL Version">15.00.4312 / 5024276 Cumulative update 20 (CU20) for SQL Server 2019</Property>
+			<Property Setting="SQL Max Memory Setting">109 GB</Property>
+			<Property Setting="SQL Max Degree of Parallelism">1</Property>
+			<Property Setting="SQL Max Worker Threads">0</Property>
+			<Property Setting="SQL Server Collation">SQL_Latin1_General_CP1_CI_AS</Property>
+		</SQLInstanceInfo>
+	</Area>
+	<!--SQL Access-->
+	<Area name="SQLAccess">
+		<!--EMISPRDENG GP-->
+		<SQLAccessInfo Instance="XXENVIRONMENTXX" ServerType="ClusterDB" os="2019" Domain="EMISPRDENG, HSCNI" Environment="All">
+			<Property Role="sysadmin">XXDOMAINXX\backup-user</Property>
+			<Property Role="sysadmin">XXDOMAINXX\gp-sql-admin</Property>
+			<Property Role="diskadmin">XXDOMAINXX\gp-sql-write</Property>
+			<Property Role="dbcreator">XXDOMAINXX\gp-sql-write</Property>
+			<!-- <Property Role="public">XXDOMAINXX\gp-sql-read</Property> -->
+			<Property Role="dbcreator">XXDOMAINXX\exa-sql-read</Property>
+			<Property Role="sysadmin">XXDOMAINXX\pd-auth-app</Property>
+			<Property Role="sysadmin">XXDOMAINXX\pd-auth-db</Property>
+			<Property Role="sysadmin">NT SERVICE\MSSQL$ENEUW2XXENVIRONMENTXXDB</Property>
+			<Property Role="sysadmin">NT SERVICE\SQLAgent$ENEUW2XXENVIRONMENTXXDB</Property>
+			<Property Role="sysadmin">NT SERVICE\SQLWriter</Property>
+			<Property Role="sysadmin">NT SERVICE\Winmgmt</Property>
+			<Property Role="sysadmin">sa</Property>
+			<Property Role="sysadmin">XXSERVERXX\emis-admin</Property>
+		</SQLAccessInfo>
+	</Area>
+
+	<!--SQL Logins-->
+	<Area name="SQLLogins">
+		<SQLLoginInfo Instance="XXENVIRONMENTXX" ServerType="ClusterDB, ClusterRSDB" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Property Type="User">XXDOMAINXX\Admin</Property>
+			<Property Type="User">XXDOMAINXX\backup-user</Property>
+			<Property Type="User">XXSERVERXX\emis-admin</Property>
+			<Property Type="User">XXDOMAINXX\dd-agent-user$</Property>
+			<Property Type="User">sa</Property>
+			<Property Type="Group">XXDOMAINXX\gp-sql-admin</Property>
+			<Property Type="Group">XXDOMAINXX\gp-sql-read</Property>
+			<Property Type="Group">XXDOMAINXX\gp-sql-write</Property>
+			<Property Type="Group">XXDOMAINXX\pd-auth-app</Property>
+			<Property Type="Group">XXDOMAINXX\pd-auth-db</Property>
+			<Property Type="Group">XXDOMAINXX\exa-sql-read</Property>
+		</SQLLoginInfo>
+	</Area>
+	<!--SQL Service SPNs-->
+	<Area name="SQLServiceSPNs">
+		<SQLServiceSPN SPN="ENEUW2XXENVIRONMENTXXRS" ServerType="ClusterRSDB" os="2019" Domain="EMISPRDENG" Environment="All">
+			<Instance>ENEUW2XXENVIRONMENTXXRS</Instance>
+			<ServiceAccount>XXDOMAINXX\SQLService-XXENVIRONMENTXX$</ServiceAccount>
+		</SQLServiceSPN>
+	</Area>
+	<!--Database Version Checks-->
+	<Area name="DBChecks">
+		<Property Name="MKBRuntime" ServerType="All" os="2019" Domain="EMISPRDENG" Environment="All">Release Number: 200</Property>
+	</Area>
+	<!--Application Services-->
+	<Area name="AppServices">
+		<!--Remote Filer-->
+		<Service Name="RemoteFilerService" ServerType="EW-Private, EW-Public" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\emisweb-XXENVIRONMENTXX</RunAs>
+		</Service>
+		<!--Web Service-->
+		<Service Name="Emis.Services.WindowsService" ServerType="EW-Private, EW-Public" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\emisweb-XXENVIRONMENTXX</RunAs>
+		</Service>
+		<!--EMAS Service-->
+		<Service Name="Emis.ExternalMessaging.WindowsCoreService" ServerType="EMAS" os="2019" Domain="EMISPRDENG" Site="All" Environment="All">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\emas-XXENVIRONMENTXX</RunAs>
+		</Service>
+		<Service Name="Emis.Scheduler.WindowsService" ServerType="EW-Private" os="2019" Domain="EMISPRDENG" Site="Production" Environment="All">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\scheduler-XXENVIRONMENTXX</RunAs>
+		</Service>
+		<!--SDS Service-->
+		<Service Name="SDSClientService" ServerType="EW-Private, EW-Public, EMAS, ClusterDB, ClusterRSDB, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, CP, DevTest, EMISPRDENG, HSCNI, Jersey, IOM" Site="All" Environment="All">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\SDS-XXENVIRONMENTXX</RunAs>
+		</Service>
+		<!--EMISConnect Service-->
+		<Service Name="Emis.Connect.Core.Host" ServerType="App, OneBoxCombi" os="2019" Domain="CCMH, CP, HSCNI, IOM, EMISPRDENG" Site="All" Environment="EC01,EC03,RX01,TRN01,UAT01">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>AuthDBAccessXXENVIRONMENTXX@XXDOMAINXX.emishosting.com</RunAs>
+		</Service>
+	</Area>
+	<!--Application File Versions-->
+	<Area name="AppFiles">
+		<!--CCMH, EMISPRDENG, HSCNI, IOM-->
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\EmisWeb Services\Emis.Mkb.Host.exe" ServerType="EW-Private, EW-Public, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" Environment="All">203.0.0.0</Property>
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\EmisWeb Services\Emis.RemoteFiler.Service.exe" ServerType="EW-Private, EW-Public, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" Environment="All">9.22.1.0100</Property>
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\EmisWeb Services\Emis.Services.WindowsService.exe" ServerType="EW-Private, EW-Public, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" Environment="All">47.1.0.0</Property>
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\EmisWeb Scheduler\Emis.Scheduler.WindowsService.exe" ServerType="EW-Private, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" Environment="All">9.22.1.0100</Property>
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\EmisWeb Services\EMISWebMiquestQueue.exe" ServerType="App, EW-Private, EW-Public, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" Environment="All">2012.3.13.0</Property>
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\EMAS Server\Emis.ExternalMessaging.WindowsCoreService.exe" ServerType="EMAS, StandardCombi, OneBoxCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" Environment="All">9.22.1.0100</Property>
+		<!--CCMH, HSCNI, IOM TRN/UAT-->
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\Emis Connect\Emis.Connect.Core.Host.exe" ServerType="OneBoxCombi" os="2008, 2012" Domain="CCMH, HSCNI, IOM" Environment="All">9.7.0.0000</Property>
+		<!--CP Connect-->
+		<Property Name="C:\ProgramData\SDS\Version6\Applications\Emis Connect\Emis.Connect.Core.Host.exe" ServerType="App" os="2008, 2012" Domain="CP" Environment="All">7.0.0.0000</Property>
+	</Area>
+	<!--Cluster Information-->
+	<Area name="ClusterInfo">
+		<Property Name="Cluster Name" ServerType="All" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">ENEUW2XXENVIRONMENTXX-CLS</Property>
+		<Property Name="Cluster Group: Available Storage" ServerType="All" os="2019" Domain="All" Environment="All" ServerID="All">State: Offline</Property>
+		<Property Name="Cluster Group: Cluster Group" ServerType="All" os="2019" Domain="All" Environment="All" ServerID="All">State: Online</Property>
+		<Property Name="Cluster Group: ENEUW2XXENVIRONMENTXX-AG1" ServerType="All" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">State: Online</Property>
+		<Property Name="Cluster Group: ENEUW2XXENVIRONMENTXX-AG2" ServerType="All" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">State: Online</Property>
+		<Property Name="Quorum Type: ENEUW2XXENVIRONMENTXX-CLS" ServerType="All" os="2019" Domain="EMISPRDENG, HSCNI" Environment="All" ServerID="All">NodeAndFileShareMajority</Property>
+		<Property Name="Quorum State: ENEUW2XXENVIRONMENTXX-CLS" ServerType="All" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">Online</Property>
+		<!-- <Property Name="Quorum Share Path: ENEUW2XXENVIRONMENTXX-CLS" ServerType="All" os="2019" Domain="EMISDEVENG, EMISSTGENG" Environment="All" ServerID="All">\\amznfsxq5ymvdux.XXENVIRONMENTXX.england.emis-web.com\share\AWS_ENG_XXENVIRONMENTXX_XXENVIRONMENTXX</Property> -->
+		<Property Name="Quorum Share Path: ENEUW2XXENVIRONMENTXX-CLS" ServerType="All" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">\\amznfsxy5v5jys9.england.emis-web.com\share\AWS_ENG_XXENVIRONMENTXX_XXENVIRONMENTXX</Property>
+		<Property Name="CrossSubnetDelay" ServerType="All" os="2016,2019" Domain="CCMH,EMISPRDENG,HSCNI,IOM" Environment="All" ServerID="All">2000</Property>
+		<Property Name="CrossSubnetThreshold" ServerType="All" os="2016,2019" Domain="CCMH,EMISPRDENG,HSCNI,IOM" Environment="All" ServerID="All">25</Property>
+		<Property Name="SameSubnetDelay" ServerType="All" os="2016,2019" Domain="CCMH,EMISPRDENG,HSCNI,IOM" Environment="All" ServerID="All">2000</Property>
+		<Property Name="SameSubnetThreshold" ServerType="All" os="2016,2019" Domain="CCMH,EMISPRDENG,HSCNI,IOM" Environment="All" ServerID="All">25</Property>
+		<Property Name="Scheduled Task" ServerType="All" os="2016,2019" Domain="CCMH,EMISPRDENG,HSCNI,IOM" Environment="All" ServerID="All">Name: Move-Core-Resource / Type: ResourceSpecific</Property>
+	</Area>
+	<!--NetBackup Services-->
+	<Area name="NetBackupServices">
+		<!-- <Service Name="NetBackup BMR MTFTP Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2008, 2012">
+			<State>Stopped</State>
+			<Startup>Manual</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service> -->
+		<!-- <Service Name="NetBackup BMR PXE Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Stopped</State>
+			<Startup>Manual</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service> -->
+		<Service Name="NetBackup Client Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup Legacy Client Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup Discovery Framework" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup SAN Client Fibre Transport Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Stopped</State>
+			<Startup>Disabled</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup Legacy Network Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup Proxy Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Stopped</State>
+			<Startup>Manual</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup Legacy Network Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Running</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+		<Service Name="NetBackup Privileged Access Service" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019">
+			<State>Stopped</State>
+			<Startup>Auto</Startup>
+			<RunAs>XXDOMAINXX\Backup-User</RunAs>
+		</Service>
+	</Area>
+	<!--Disk Info-->
+	<Area name="DiskInfo">
+		<Letter Name="C:" ServerType="All" os="2019" Domain="All" Environment="All" ServerID="All">
+			<Volume></Volume>
+			<BlockSize>4K</BlockSize>
+		</Letter>
+		<Letter Name="D:" ServerType="ClusterDB, ClusterRSDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="All" Environment="All" ServerID="All">
+			<Volume>DATA</Volume>
+			<BlockSize>64K</BlockSize>
+		</Letter>
+		<Letter Name="E:" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">
+			<Volume>Monitoring</Volume>
+			<BlockSize>64K</BlockSize>
+		</Letter>
+		<Letter Name="F:" ServerType="ClusterDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="EMISPRDENG" Environment="All" ServerID="All">
+			<Volume>EMAS</Volume>
+			<BlockSize>64K</BlockSize>
+		</Letter>
+		<Letter Name="L:" ServerType="ClusterDB, ClusterRSDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="All" Environment="All" ServerID="All">
+			<Volume>LOGS</Volume>
+			<BlockSize>64K</BlockSize>
+		</Letter>
+		<Letter Name="Q:" ServerType="ClusterDB, ClusterRSDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="CP, EMISPRDENG, HSCNI" Environment="All" ServerID="All">
+			<Volume>SQL</Volume>
+			<BlockSize>64K</BlockSize>
+		</Letter>
+		<Letter Name="T:" ServerType="ClusterDB, ClusterRSDB, DataBase, StandardCombi, ClusterCombi" os="2019" Domain="All" Environment="All" ServerID="All">
+			<Volume>TEMPDB</Volume>
+			<BlockSize>64K</BlockSize>
+		</Letter>
+	</Area>
+	<!--Network Test-->
+	<Area name="NetTest">
+		<!-- <Connection Name="white.local" ServerType="All" os="2008, 2012, 2019" Domain="CCMH, CP, DevTest, EMISDEVENG, HSCNI, IOM, Jersey, White" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="emishosting.com" ServerType="All" os="2008, 2012, 2019" Domain="CCMH, CP, DevTest, EMISDEVENG, HSCNI, IOM, Jersey, White" environment="All">
+			<State>Success</State>
+		</Connection> -->
+		<Connection Name="Port 443 (Spine / lrs-sync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / alerts-rmasync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / mm-rmasync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / pds-rmasync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / pds-sync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / psis-rmasync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / psis-umasync.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (Spine / rmmid.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 636 (Spine / ldap.national.ncrs.nhs.uk)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+
+		<Connection Name="Port 33980 (Scheduler)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 33966 (EmisWeb)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 33968 (EmisWeb)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 443 (EMAS)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 33967 (EMAS)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<!-- <Connection Name="Port 33990 (EMAS)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection> -->
+		<Connection Name="Port 33956 (EmisConnect)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<!-- <Connection Name="Port 33968 (EmisConnect)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection> -->
+		<Connection Name="Port 33989 (GPES)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<Connection Name="Port 8085 (EmisConnectAPI)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection>
+		<!-- <Connection Name="Port 33968 (EmisConnectAPI)" ServerType="App, EW-Private, EW-Public, EMAS" os="2019" Domain="EMISPRDENG" environment="All">
+			<State>Success</State>
+		</Connection> -->
+	</Area>
+	<!--Mobile Test-->
+	<Area name="MobileTest">
+		<Connection Name="https://emismobile.e-mis.co.uk" ServerType="App, ClusterCombi, StandardCombi, OneBoxCombi" os="2019">
+			<State>OK</State>
+		</Connection>
+	</Area>
+	<!--Certificate Test (US date format)-->
+	<Area name="CertificateTest">
+		<Certificate Name="Zscaler Root CA" ServerType="All" os="2019" Domain="All" environment="All">
+			<Issuer>Zscaler Root CA</Issuer>
+			<EndDate>05/06/2042 01:27:55</EndDate>
+			<Path>Root</Path>
+		</Certificate>
+		<Certificate Name="NHS Root Authority" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="All" environment="All">
+			<Issuer>NHS Root Authority</Issuer>
+			<EndDate>06/04/2024 12:28:31</EndDate>
+			<Path>Root</Path>
+		</Certificate>
+		<Certificate Name="NHS Root Authority G2" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="All" environment="All">
+			<Issuer>NHS Root Authority G2</Issuer>
+			<EndDate>04/07/2042 12:41:21</EndDate>
+			<Path>Root</Path>
+		</Certificate>
+		<Certificate Name="NHS Level 1C" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="All" environment="All">
+			<Issuer>NHS Root Authority</Issuer>
+			<EndDate>06/04/2024 12:28:31</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="NHS Level 1D" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="All" environment="All">
+			<Issuer>NHS Root Authority</Issuer>
+			<EndDate>06/04/2024 12:28:31</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="NHS Signing G2" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="All" environment="All">
+			<Issuer>NHS Root Authority G2</Issuer>
+			<EndDate>09/15/2032 12:14:03</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="NHS Authentication G2" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="All" environment="All">
+			<Issuer>NHS Root Authority G2</Issuer>
+			<EndDate>09/15/2032 12:08:55</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="portalsdk.emishealth.com" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi" os="2019" Domain="CCMH, EMISPRDENG, HSCNI, IOM" environment="All">
+			<Issuer>Go Daddy Secure Certificate Authority - G2</Issuer>
+			<EndDate>06/01/2024 08:52:33</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<!-- <Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="All">
+			<Issuer>NHS Level 1C</Issuer>
+			<EndDate>06/04/2024 12:28:31</EndDate>
+			<Path>My</Path>
+		</Certificate> -->
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP01,GP02,GP03">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>06/04/2024 12:28:31</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP04">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>07/14/2026 12:54:59</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP05">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>07/20/2026 13:20:30</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP06">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>07/20/2026 13:39:33</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP07">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>07/21/2026 10:30:23</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP08">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>07/21/2026 11:11:58</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP09">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>07/21/2026 11:40:13</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP10">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>08/17/2026 15:45:27</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP11">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>08/17/2026 15:45:49</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP12">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>08/17/2026 15:46:35</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP13">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:43:44</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP14">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:43:59</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP15">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:44:15</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP16">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:44:29</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP17">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:44:44</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP18">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:45:00</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP19">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:45:15</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP20">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/02/2026 08:45:34</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP21">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:35:11</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP22">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:35:29</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP23">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:35:43</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP24">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:35:57</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP25">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:36:10</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP26">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:36:28</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP27">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:36:41</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP28">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:36:53</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP29">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:37:05</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP30">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/06/2026 09:37:18</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP31">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:08:38</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP32">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:09:14</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP33">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:09:38</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP34">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:09:58</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP35">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:10:21</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP36">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:10:55</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP37">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:11:17</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP38">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:11:35</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP39">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:11:55</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP40">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/16/2026 14:12:21</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP41">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:07:23</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP42">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:07:38</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP43">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:07:49</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP44">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:08:01</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP45">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:08:13</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP46">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:08:26</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP47">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:08:40</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP48">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:08:53</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP49">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:09:07</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP50">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:09:21</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP51">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:09:34</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP52">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:09:46</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP53">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:09:58</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP54">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:10:23</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP55">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:10:11</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP56">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:10:36</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP57">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:10:48</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP58">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:11:07</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP59">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:11:20</EndDate>
+			<Path>My</Path>
+		</Certificate>
+		<Certificate Name="awsenXXENVIRONMENTXX.spine.emis.thirdparty.nhs.uk" ServerType="App, EW-Private, EW-Public, EMAS, ClusterCombi, StandardCombi, OneBoxCombi" os="2019" Domain="EMISPRDENG" environment="GP60">
+			<Issuer>NHS Authentication G2</Issuer>
+			<EndDate>10/25/2026 16:11:32</EndDate>
+			<Path>My</Path>
+		</Certificate>
+
+		<!-- <Certificate Name="RootCA.emishealth.com" ServerType="App, ClusterCombi, StandardCombi, ClusterDB, ClusterRSDB, Database, OneBoxCombi" os="2019" Domain="CCMH, CP, EMISPRDENG, HSCNI, IOM" environment="All">
+			<Issuer>RootCA.emishealth.com</Issuer>
+			<EndDate>06/08/2036 14:05:28</EndDate>
+			<Path>Root</Path>
+		</Certificate>
+		<Certificate Name="SubCA001.emishealth.com" ServerType="App, ClusterCombi, StandardCombi, ClusterDB, ClusterRSDB, Database, OneBoxCombi" os="2019" Domain="CCMH, CP, EMISPRDENG, HSCNI, IOM" environment="All">
+			<Issuer>RootCA.emishealth.com</Issuer>
+			<EndDate>07/14/2026 14:59:51</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="SubCA002.emishealth.com" ServerType="App, ClusterCombi, StandardCombi, ClusterDB, ClusterRSDB, Database, OneBoxCombi" os="2019" Domain="CCMH, CP, EMISPRDENG, HSCNI, IOM" environment="All">
+			<Issuer>RootCA.emishealth.com</Issuer>
+			<EndDate>07/06/2026 16:58:54</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="SubCA003.emishealth.com" ServerType="App, ClusterCombi, StandardCombi, ClusterDB, ClusterRSDB, Database, OneBoxCombi" os="2019" Domain="CCMH, CP, EMISPRDENG, HSCNI, IOM" environment="All">
+			<Issuer>RootCA.emishealth.com</Issuer>
+			<EndDate>07/07/2026 09:47:51</EndDate>
+			<Path>CA</Path>
+		</Certificate>
+		<Certificate Name="emishealth.com" ServerType="OneBoxCombi" os="2019, 2012" Domain="CCMH" environment="TRN01,UAT01">
+			<Issuer>Go Daddy Secure Certificate Authority - G2</Issuer>
+			<EndDate>05/08/2023 10:19:19</EndDate>
+			<Path>My</Path>
+		</Certificate> -->
+	</Area>
+</COMPLIANCE>
