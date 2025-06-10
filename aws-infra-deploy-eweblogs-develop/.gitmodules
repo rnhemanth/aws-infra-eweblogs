@@ -1,4 +1,0 @@
-[submodule "github-runner"]
-	path   = github-runner
-	url    = https://github.com/emisgroup/github-runner.git
-	branch = main
