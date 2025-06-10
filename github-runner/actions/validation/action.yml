@@ -1,0 +1,24 @@
+name: peer_check_validation
+description: Peer check validation for all servers in a PD
+
+inputs:
+  pd-number:
+    description: 'PD number'
+    required: true
+  s3-bucket:
+    description: 'Validation S3 bucket'
+    required: true
+  default-secret-name:
+    description: 'Name of the default secret in AWS secrets manager'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke report and compliance scripts on each computer in the PD OU
+      run: >
+        .\scripts\peer-check\validation.ps1
+        -s3Bucket ${{ inputs.s3-bucket }}
+        -PD ${{ inputs.pd-number }}
+        -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner

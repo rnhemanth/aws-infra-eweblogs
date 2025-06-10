@@ -1,0 +1,16 @@
+name: dd_ad_update
+description: Action to create the organisational unit, ad users and groups with powershell scripts
+
+inputs:
+  pd-number:
+    description: 'PD Number'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script map_dd_user_groups
+      run: >
+         .\scripts\sydney\map_dd_user_groups.ps1 -pdNumber ${{ inputs.pd-number }}
+      shell: powershell
+      working-directory: ./github-runner

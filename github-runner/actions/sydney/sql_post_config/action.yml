@@ -1,0 +1,20 @@
+name: sql_post_config
+description: Run Post SQL Config Scripts
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'server hostname'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: install-sqlserver
+      run: >
+        .\scripts\sydney\SQL_PostConfig.ps1
+        -DB_server "${{inputs.server-hostname}}"
+        -Domain "${{inputs.full-domain-name}}"
+      working-directory: ./github-runner
+      shell: powershell

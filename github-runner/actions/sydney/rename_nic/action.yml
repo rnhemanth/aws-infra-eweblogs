@@ -1,0 +1,23 @@
+name: rename_nic
+description: Action to rename network interfaces for a target host
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name:
+      run: |
+        Invoke-Command -ScriptBlock {
+          Rename-NetAdapter -Name "Ethernet*" -NewName "Private"
+        } -ComputerName ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+      shell: powershell

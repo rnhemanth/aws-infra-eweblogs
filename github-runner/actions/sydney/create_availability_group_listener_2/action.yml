@@ -1,0 +1,71 @@
+name: create_availability_group_listener_2
+description: invoke SQl to create availability group listener
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  instance:
+    description: 'DB instance name'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  ag1-listener-ip-1:
+    description: 'AG1 listener IP 1'
+    required: true
+  ag1-listener-ip-2:
+    description: 'AG1 listener IP 2'
+    required: true
+  ag2-listener-ip-1:
+    description: 'AG2 listener IP 1'
+    required: true
+  ag2-listener-ip-2:
+    description: 'AG2 listener IP 2'
+    required: true
+  subnet-mask:
+    description: 'Subnet mask for AG IPs'
+    required: true
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  ag-name-1:
+    description: "Availability Group Name"
+    required: true
+  ag-name-2:
+    description: "Availability Group 2 Name"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL create AG1 listener
+      run: |
+        Import-Module dbatools -erroraction SilentlyContinue
+        Set-DbatoolsConfig -FullName sql.connection.trustcert -Value $true -Register
+        Set-DbatoolsConfig -FullName sql.connection.encrypt -Value $false -Register
+        $listenerPort = (Get-DbaAgListener -SqlInstance ${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }} -AvailabilityGroup ${{ inputs.ag-name-1 }}).PortNumber
+        if ($listenerPort -eq 1435) {
+          Write-Host "Listener port for AG1 already exists"
+        } else {
+          Add-DbaAgListener -SqlInstance "${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}" -AvailabilityGroup "${{ inputs.ag-name-1 }}" -Port 1435 -IPAddress ${{ inputs.ag1-listener-ip-1 }},${{ inputs.ag1-listener-ip-2 }} -SubnetMask ${{ inputs.subnet-mask}}
+        }
+      shell: powershell
+
+    - name: Invoke SQL create AG2 listener
+      run: |
+        Import-Module dbatools -erroraction SilentlyContinue
+        Set-DbatoolsConfig -FullName sql.connection.trustcert -Value $true -Register
+        Set-DbatoolsConfig -FullName sql.connection.encrypt -Value $false -Register
+        $listenerPort = (Get-DbaAgListener -SqlInstance ${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }} -AvailabilityGroup ${{ inputs.ag-name-2 }}).PortNumber
+        if ($listenerPort -eq 1436) {
+          Write-Host "Listener port for AG2 already exists"
+        } else {
+          Add-DbaAgListener -SqlInstance "${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}" -AvailabilityGroup "${{ inputs.ag-name-2 }}" -Port 1436 -IPAddress ${{ inputs.ag2-listener-ip-1 }},${{ inputs.ag2-listener-ip-2 }} -SubnetMask ${{ inputs.subnet-mask}}
+        }
+      shell: powershell

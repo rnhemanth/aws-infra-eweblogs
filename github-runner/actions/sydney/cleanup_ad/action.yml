@@ -1,0 +1,21 @@
+name: Cleanup
+description: Delete computer AD objects and DNS records in AD
+
+inputs:
+  server-name:
+    description: 'Name of your computer'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Cleanup AD objects"
+      run: >
+        .\scripts\sydney\CleanupADObjects.ps1
+        -server "${{ inputs.server-name }}"
+        -fullDomain "${{ inputs.full-domain-name }}"
+      shell: powershell
+      working-directory: ./github-runner

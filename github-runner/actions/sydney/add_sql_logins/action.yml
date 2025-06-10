@@ -1,0 +1,30 @@
+name: add-sql-logins
+description: Add the SQL logins
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    required: true
+  script:
+    description: 'script filename in scripts/ folder'
+    required: true
+  instance:
+    required: true
+  netbios-name:
+    required: true
+  user:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL
+      run: |
+        Copy-Item -Path .\scripts\sydney\${{ inputs.script }} -Destination .\scripts\sydney\tmp-${{ inputs.server-hostname }}-${{ inputs.script }};
+        ((Get-Content -path .\scripts\sydney\tmp-${{ inputs.server-hostname }}-${{ inputs.script }} -Raw) -replace 'NETBIOSNAME','${{ inputs.netbios-name }}' -replace 'USERNAME','${{ inputs.user }}') | Set-Content -Path .\scripts\sydney\${{ inputs.server-hostname }}_${{ inputs.script }};
+        Import-Module dbatools -erroraction SilentlyContinue;
+        Invoke-DbaQuery -SqlInstance ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}\${{ inputs.instance }} -File ".\scripts\sydney\${{ inputs.server-hostname }}_${{ inputs.script }}"
+      working-directory: ./github-runner
+      shell: powershell

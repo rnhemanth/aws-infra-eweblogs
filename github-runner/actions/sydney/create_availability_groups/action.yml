@@ -1,0 +1,42 @@
+name: create_availability_groups
+description: Executes the SQL to create the availability groups
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  secondary-server:
+    description: 'Hostname of Secondary server in the cluster'
+    required: true
+  instance:
+    description: 'DB instance name'
+    required: true
+  ag-name:
+    description: "Availability Group Name"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL
+      run: >
+        Invoke-Sqlcmd -TrustServerCertificate -InputFile .\scripts\sydney\create-sql-AG.sql
+        -ServerInstance ${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}
+        -Variable
+        'PrimaryServername=${{ inputs.primary-server }}\${{ inputs.instance }}',
+        'SecondaryServername=${{ inputs.secondary-server }}\${{ inputs.instance }}',
+        'AG1name=${{ inputs.ag-name }}',
+        'DomainName=${{ inputs.full-domain-name }}'
+      working-directory: ./github-runner
+      shell: powershell

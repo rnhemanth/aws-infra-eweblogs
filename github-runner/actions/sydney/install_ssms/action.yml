@@ -1,0 +1,23 @@
+name: Install SQL Server Management Studio
+description: installation of ssms
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description:
+    required: true
+  ssms-installer:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: install-ssms
+      run: >
+        Invoke-Command -FilePath .\scripts\sydney\install_ssms.ps1
+        -ComputerName ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -ArgumentList ${{ inputs.ssms-installer }}
+      working-directory: ./github-runner
+      shell: powershell

@@ -1,0 +1,20 @@
+name: Add instances to AD Group
+description: Add instances to group
+# Usage: run from windows self-hosted runner
+
+inputs:
+  instance_name:
+    description: 'server name'
+    required: true
+  ad_group_name:
+    description: 'AD group name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Add instance to AD Group
+      run: >
+        .\scripts\sydney\add_instance_to_group.ps1 -InstanceHostname ${{ inputs.instance_name }} -groupName ${{ inputs.ad_group_name }}
+      working-directory: ./github-runner
+      shell: powershell

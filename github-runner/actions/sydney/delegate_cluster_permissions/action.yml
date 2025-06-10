@@ -1,0 +1,33 @@
+name: delegate_cluster_permissions
+description: execute delegate cluster permissions command
+
+inputs:
+  name-prefix:
+    description: "Name prefix"
+    required: false
+    default: ''
+  service:
+    description: "Service Name"
+    required: false
+    default: ''
+  ou:
+    description: "Server OU name"
+    required: true
+  ad-domain:
+    description: "MAD Domain Name"
+    required: true
+  cluster-name:
+    description: "Cluster Name"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke delegate cluster permissions script
+      run: >
+        .\scripts\sydney\delegate_cluster_permissions.ps1
+        -OU ${{ inputs.ou }}
+        -Service ${{ inputs.service }}
+        -ClusterObjectName ${{ inputs.cluster-name }}
+        -ADDomain "${{ inputs.ad-domain }}"
+      working-directory: ./github-runner
+      shell: powershell

@@ -1,0 +1,26 @@
+name: join_availability_group_2
+description: join database to SQL availability group
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  ag-name:
+    description: 'Name of the availability group'
+    required: true
+  server-hostname:
+    description: 'Hostname of the server'
+    required: true
+  instance:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL join AG
+      run: >
+        Invoke-Sqlcmd -TrustServerCertificate -InputFile .\scripts\sydney\Join-to-AG.sql
+        -ServerInstance ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}
+        -V 'AGname=${{ inputs.ag-name }}'
+      working-directory: ./github-runner
+      shell: powershell

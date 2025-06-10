@@ -1,0 +1,28 @@
+name: 'Delete Infrastructure'
+description: Deletes AWS infrastructure using Terraform
+# Usage: run from ubuntu-latest runner
+
+inputs:
+  terraform-folder:
+    description: 'relative path from github-runner to folder where terraform resources are defined for this action'
+    required: true
+  terragrunt-config:
+    description: 'relative path from terraform folder to terragrunt.hcl'
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install terragrunt
+      run: make setup
+      working-directory: ./github-runner
+      shell: bash
+
+    - name: Delete infrastructure
+      run: make terragrunt-destroy
+      working-directory: ./github-runner
+      shell: bash
+      env:
+        terraform_folder: ${{ inputs.terraform-folder }}
+        terragrunt_config: ${{ inputs.terragrunt-config }}

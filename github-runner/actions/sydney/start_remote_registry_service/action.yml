@@ -1,0 +1,31 @@
+name: start_remote_registry_service
+description: Starts the remote registry service
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  secondary-server:
+    description: 'Hostname of Secondary server in the cluster'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Start remote registry service in primary server
+      run: Get-Service -Name RemoteRegistry -ComputerName ${{ inputs.primary-server }}.${{ inputs.full-domain-name }} | Start-Service
+      shell: powershell
+    - name: Start remote registry service in secondary server
+      run: Get-Service -Name RemoteRegistry -ComputerName ${{ inputs.secondary-server }}.${{ inputs.full-domain-name }} | Start-Service
+      shell: powershell

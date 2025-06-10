@@ -1,0 +1,28 @@
+name: move_core_resource
+description: Move Core Resource
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Move core resources script
+      run: >
+        Invoke-Command -ScriptBlock { Copy-Item .\scripts\sydney\MoveCoreResource.ps1
+        -Destination (New-Item -type directory ('\\${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}\C$\EMIS\Clustask\MoveCoreResource\Scripts\') -Force) }
+      shell: powershell
+      working-directory: ./github-runner

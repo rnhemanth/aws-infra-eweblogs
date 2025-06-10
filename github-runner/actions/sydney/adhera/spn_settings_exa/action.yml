@@ -1,0 +1,33 @@
+name: spn_settings_exa
+description: Sets the SPN settings for EXA
+
+inputs:
+  service:
+    description: 'Service aka PD Number'
+    required: false
+    default: '1'
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  sql-user:
+    description: 'SQL user'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+  ag-name:
+    description: "AG name"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Add SPN to AD
+      run: >
+        .\scripts\sydney\adhera\spn-add.ps1
+        -sqlserviceaccount "${{ inputs.sql-user }}"
+        -fullDomain "${{ inputs.full-domain-name }}"
+        -prefix "${{ inputs.name-prefix }}${{ inputs.service }}"
+        -agname "${{ inputs.ag-name}}"
+      shell: powershell
+      working-directory: ./github-runner

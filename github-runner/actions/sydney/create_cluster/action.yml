@@ -1,0 +1,70 @@
+name: create-cluster
+description: run the create cluster script
+
+inputs:
+  cluster-name:
+    description: 'SQL server cluster name'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  secondary-server:
+    description: 'Hostname of Secondary server in the cluster'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  primary-cluster-ip:
+    description: 'Static IP of the primary node in the cluster'
+    required: true
+  secondary-cluster-ip:
+    description: 'Static IP of the secondary node in the cluster'
+    required: true
+  witness-dns:
+    description: 'Witness share FS'
+    required: true
+  environment:
+    description: 'name of the environment'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: install management tools
+      run:  Install-WindowsFeature -Name RSAT-Clustering
+      shell: powershell
+    - name: create-cluster-command
+      run: >
+        .\scripts\sydney\CreateCluster.ps1
+        -node1 ${{ inputs.primary-server }}.${{ inputs.full-domain-name }}
+        -node2 ${{ inputs.secondary-server }}.${{ inputs.full-domain-name }}
+        -clusterName ${{ inputs.cluster-name }}
+        -domainName ${{ inputs.full-domain-name }}
+        -primaryClusterIp ${{ inputs.primary-cluster-ip }}
+        -secondaryClusterIp ${{ inputs.secondary-cluster-ip }}
+      working-directory: ./github-runner
+      shell: powershell
+    - name: Create witness folders
+      run: |
+        $envUpper = "${{ inputs.environment }}".ToUpper()
+        New-Item -ItemType Directory -Force -Path \\${{inputs.witness-dns}}\share\AWS_ENG_$($envUpper)_${{ inputs.service }};
+      shell: powershell
+
+    - name: Add File Share witness
+      run: >
+        $envUpper = "${{ inputs.environment }}".ToUpper();
+        Start-Sleep 300;
+        if ((Get-Cluster -Domain ${{ inputs.full-domain-name }} -Name ${{ inputs.cluster-name }} | Get-ClusterQuorum).QuorumResource) {
+          Write-Host "Quorum exists, not recreating"
+          } else {
+            Get-Cluster -Domain ${{ inputs.full-domain-name }} -Name ${{ inputs.cluster-name }} | Set-ClusterQuorum -NodeAndFileShareMajority \\${{inputs.witness-dns}}\share\AWS_ENG_$($envUpper)_${{ inputs.service }}
+            }
+      shell: powershell

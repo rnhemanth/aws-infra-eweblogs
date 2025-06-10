@@ -1,0 +1,49 @@
+name: install_crowdstrike
+description: Installation of Crowdstrike
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+  environment-type:
+    description: 'Environment type'
+    required: true
+  server-type:
+    description: 'Server type APP/DB'
+    required: true
+  install-source:
+    description: 'Crowdstrike installation path'
+    required: true
+  cid:
+    description: 'Crowdstrike CID'
+    required: true
+  grouping-tag:
+    description: 'Crowdstrike grouping 3rd tag'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Crowdstrike
+      run: >
+        .\scripts\install_crowdstrike.ps1
+        -computerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -InstallSource ${{ inputs.install-source }}
+        -CID ${{ inputs.cid }}
+        -Environment ${{ inputs.environment-type }}
+        -ServerType ${{ inputs.server-type }}
+        -PDNumber ${{ inputs.pd-number }}
+        -GroupingTag ${{ inputs.grouping-tag }}
+      shell: powershell
+      working-directory: ./github-runner

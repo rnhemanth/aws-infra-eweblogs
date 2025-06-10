@@ -1,0 +1,63 @@
+name: setup-sqlserver
+description: installation of sqlserver
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  authdbaccessaccount:
+    description: 'authdbaccessaccount'
+    required: true
+  dba-admin:
+    description: 'SQL Sysadmin user or group'
+    required: true
+  sql-user:
+    description: 'SQL user'
+    required: true
+  sql-agent:
+    description: 'SQL agent'
+    required: true
+  sql-browser:
+    description: 'SQL Browser account'
+    required: true
+  sql-cu:
+    description: 'SQL CU'
+    required: true
+  server-hostname:
+    description: 'Server Name'
+    required: true
+  instance:
+    description: 'Instance Name'
+    required: true
+  netbios-name:
+    description: 'NETBIOS name'
+    required: true
+  installer-path:
+    description: 'SQL installer full path'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Update NIC with DNS suffix
+      run: >
+        Invoke-Command -FilePath .\scripts\sydney\UpdateDNSSuffix.ps1
+        -ComputerName ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -ArgumentList ${{ inputs.full-domain-name }}
+      working-directory: ./github-runner
+      shell: powershell
+    - name: install-sqlserver
+      run: >
+        .\scripts\sydney\install_sql_nbu_restore.ps1
+        -domain "${{ inputs.full-domain-name }}"
+        -authdbaccessaccount "${{ inputs.netbios-name }}\${{ inputs.authdbaccessaccount }}$"
+        -dbaadmin "${{ inputs.netbios-name }}\${{ inputs.dba-admin }}"
+        -sqlserviceaccount "${{ inputs.netbios-name }}\${{ inputs.sql-user }}$"
+        -sqlagentaccount "${{ inputs.netbios-name }}\${{ inputs.sql-agent }}$"
+        -sqlbrowseraccount "${{ inputs.netbios-name }}\${{ inputs.sql-browser }}$"
+        -sqlcuversion "${{ inputs.sql-cu }}"
+        -server "${{ inputs.server-hostname }}"
+        -instance "${{ inputs.instance }}"
+        -installerpath "${{ inputs.installer-path }}"
+      working-directory: ./github-runner
+      shell: powershell

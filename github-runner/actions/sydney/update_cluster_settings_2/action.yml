@@ -1,0 +1,66 @@
+name: update_cluster_settings_2
+description: Enables always on SQLs
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  primary-cluster-ip:
+    description: 'Static IP of the primary node in the cluster'
+    required: true
+  secondary-cluster-ip:
+    description: 'Static IP of the secondary node in the cluster'
+    required: true
+  ag1-listener-ip-1:
+    description: 'AG1 listener IP 1'
+    required: true
+  ag1-listener-ip-2:
+    description: 'AG1 listener IP 2'
+    required: true
+  ag2-listener-ip-1:
+    description: 'AG2 listener IP 1'
+    required: true
+  ag2-listener-ip-2:
+    description: 'AG2 listener IP 2'
+    required: true
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  secondary-server:
+    description: 'Hostname of Secondary server in the cluster'
+    required: true
+  ag-name-1:
+    description: "Availability Group Name"
+    required: true
+  ag-name-2:
+    description: "Availability Group Name 2"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script
+      run: >
+        Invoke-Command -FilePath .\scripts\sydney\update_cluster_settings_2.ps1
+        -ComputerName ${{ inputs.primary-server }}.${{ inputs.full-domain-name }}
+        -ArgumentList
+        "${{ inputs.primary-server }}",
+        "${{ inputs.seondary-server }}",
+        "${{ inputs.ag-name-1 }}",
+        "${{ inputs.ag-name-2 }}",
+        "${{ inputs.primary-cluster-ip }}",
+        "${{ inputs.secondary-cluster-ip }}",
+        "${{ inputs.ag1-listener-ip-1 }}",
+        "${{ inputs.ag1-listener-ip-2 }}",
+        "${{ inputs.ag2-listener-ip-1 }}",
+        "${{ inputs.ag2-listener-ip-2 }}"
+      working-directory: ./github-runner
+      shell: powershell

@@ -1,0 +1,47 @@
+name: enable-sql-alawys-on
+description: Enables always on SQLs
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  instance:
+    description: 'DB instance'
+    required: true
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  secondary-server:
+    description: 'Hostname of Secondary server in the cluster'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script - primary server
+      run: >
+        .\scripts\sydney\enable-always-on.ps1
+        -server "${{ inputs.primary-server }}.${{ inputs.full-domain-name }}"
+        -instance "${{ inputs.instance }}";
+        Restart-Computer -ComputerName ${{ inputs.primary-server }} -Force
+      working-directory: ./github-runner
+      shell: powershell
+    - name: Invoke script - secondary server
+      run: >
+        .\scripts\sydney\enable-always-on.ps1
+        -server "${{ inputs.secondary-server }}.${{ inputs.full-domain-name }}"
+        -instance "${{ inputs.instance }}";
+        Restart-Computer -ComputerName ${{ inputs.secondary-server }} -Force
+      working-directory: ./github-runner
+      shell: powershell
+    - name: Sleep 30s
+      run: start-sleep -Seconds 30
+      shell: powershell

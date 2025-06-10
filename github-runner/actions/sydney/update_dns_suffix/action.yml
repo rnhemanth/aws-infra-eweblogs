@@ -1,0 +1,21 @@
+name: Update DNS Suffix
+description: update dns suffix
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Update NIC with DNS suffix
+      run: >
+        Invoke-Command -FilePath .\scripts\sydney\UpdateDNSSuffix.ps1
+        -ComputerName ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -ArgumentList ${{ inputs.full-domain-name }}
+      working-directory: ./github-runner
+      shell: powershell

@@ -1,0 +1,48 @@
+name: install_crowdstrike
+description: Installation of Crowdstrike
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  environment-id:
+    description: 'Environment ID'
+    required: true
+  product:
+    description: 'Product'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+  environment-type:
+    description: 'Environment type'
+    required: true
+  server-type:
+    description: 'Server type APP/DB'
+    required: true
+  install-source:
+    description: 'Crowdstrike installation path'
+    required: true
+  cid:
+    description: 'Crowdstrike CID'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Crowdstrike
+      run: >
+        .\scripts\sydney\install_crowdstrike_cpsc.ps1
+        -computerName ${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -InstallSource ${{ inputs.install-source }}
+        -CID ${{ inputs.cid }}
+        -Environment ${{ inputs.environment-type }}
+        -ServerType ${{ inputs.server-type }}
+        -EnvironmentID ${{ inputs.environment-id }}
+        -Product ${{ inputs.product }}
+      shell: powershell
+      working-directory: ./github-runner

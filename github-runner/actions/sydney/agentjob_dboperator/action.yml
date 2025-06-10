@@ -1,0 +1,42 @@
+name: agentjob_dboperator
+description: Runs the update agent job settings, add db operator
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  service:
+    description: 'Service Name'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  instance:
+    description: 'DB instance name'
+    required: true
+  primary-server:
+    description: 'Hostname of Primary server in the cluster'
+    required: true
+  secondary-server:
+    description: 'Hostname of Secondary server in the cluster'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script UpdateAgentJobOwner
+      run: >
+        .\scripts\sydney\UpdateAgentJobOwner.ps1
+        -PrimaryServer "${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}"
+        -SecondaryServer "${{ inputs.secondary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}"
+      working-directory: ./github-runner
+      shell: powershell
+    - name: Invoke script CreateDBOperator
+      run: >
+        .\scripts\sydney\CreateDBOperator.ps1
+        -PrimaryServer "${{ inputs.primary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}"
+        -SecondaryServer "${{ inputs.secondary-server }}.${{ inputs.full-domain-name }}\${{ inputs.instance }}"
+      working-directory: ./github-runner
+      shell: powershell
