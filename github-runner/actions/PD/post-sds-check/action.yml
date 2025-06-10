@@ -1,0 +1,20 @@
+name: post-sds-check
+description: invoke post sds check
+
+inputs:
+  command:
+    description: 'command'
+    required: true
+  arguments:
+    description: 'command'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "invoke: ${{ inputs.command }}"
+      run: >
+        echo "${{ inputs.command }} -
+        ${{ inputs.command }} ${{ inputs.arguments }}
+        "
+      shell: powershell

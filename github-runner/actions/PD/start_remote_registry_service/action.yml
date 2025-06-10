@@ -1,0 +1,28 @@
+name: start_remote_registry_service
+description: Starts the remote registry service
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Start remote registry service DBS01
+      run: Get-Service -Name RemoteRegistry -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }} | Start-Service
+      shell: powershell
+    - name: Start remote registry service DBS02
+      run: Get-Service -Name RemoteRegistry -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02.${{ inputs.full-domain-name }} | Start-Service
+      shell: powershell
+    - name: Start remote registry service RS-01
+      run: Get-Service -Name RemoteRegistry -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01.${{ inputs.full-domain-name }} | Start-Service
+      shell: powershell

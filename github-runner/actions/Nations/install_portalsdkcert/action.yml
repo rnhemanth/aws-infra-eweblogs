@@ -1,0 +1,46 @@
+name: install-portalSDK-cert
+description: run the install portalSDK cert script
+
+inputs:
+  pd-number:
+    description: 'pd-number eg:cm01'
+    required: true
+  portalsdk-pass:
+    description: 'certificate password'
+    required: true
+  country:
+    description: 'country identifier eg:im'
+    required: true
+  environment:
+    description: 'environment eg:dev,stg,prd'
+    required: true
+  default-secret-name:
+    description: 'secret for cert install'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install PortalSDK certificate
+      run: |
+        echo "Installing PortalSDK certificate."
+          pd=${{inputs.pd-number}}
+          country=${{inputs.country}}
+          pdlower=${pd,,} 
+        echo "${pdlower}"        
+          commandId1=$(aws ssm send-command --document-name "ImportPortalSDKCertificates" --targets '[{"Key":"resource-groups:Name","Values":["'${{inputs.country}}-${pdlower}'-emis-web-apps"]}]' --parameters '{"certPwd":["${{ inputs.portalsdk-pass }}"],"certName":["portalsdk.emishealth.com_2024.pfx"],"pd":["${{ inputs.pd-number }}"],"s3BucketName":["'${{inputs.environment}}'-nations-ssm-certificates-s3-bucket-certificates"],"DomainPasswordArn":["${{ inputs.default-secret-name }}"]}' --query 'Command.CommandId' --output text)
+          command_status="starting"
+          while [ $command_status != "Success" ]
+          do
+            echo "PortalSDK certificate still installing"
+            sleep 10
+            command_status=$(aws ssm list-commands --command-id $commandId1 --query "Commands[].StatusDetails" --output text)
+            if [ $command_status = "Failed" ]
+            then
+              echo "PortalSDK certificate install failed"
+              exit 1
+            fi
+          done
+          echo "PortalSDK certificate install complete"
+      shell: bash
+      working-directory: ./github-runner

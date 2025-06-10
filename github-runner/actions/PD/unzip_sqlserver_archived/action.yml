@@ -1,0 +1,24 @@
+name: unzip_sqlserver
+description: Unzip SQLServer Binaries
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Unzip SQL server installer
+      run: >
+       Invoke-Command -ComputerName "$${{inputs.server-hostname}}" -ScriptBlock { Expand-Archive -Path "C:\\Agents\\SQL_2019_ENT\\" -DestinationPath "C:\SQL2019_Install\Install_files\\"}
+      shell: powershell

@@ -1,0 +1,35 @@
+name: agentjob_dboperator
+description: Runs the update agent job settings, add db operator
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  hostname:
+    description: 'hostname e.g. dbs01, dbs02, rs-01'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script UpdateAgentJobOwner
+      run: |
+        $ServerType = "${{ inputs.hostname }}"
+        if ($ServerType -like "*rs-01*") {.\scripts\PD\rebuild\UpdateAgentJobOwner.ps1 -Server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS"} else {.\scripts\PD\rebuild\UpdateAgentJobOwner.ps1 -Server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB"}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateDBOperator
+      run: |
+        $ServerType = "${{ inputs.hostname }}"
+        if ($ServerType -like "*rs-01*") {.\scripts\PD\rebuild\CreateDBOperator.ps1 -Server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS"} else {.\scripts\PD\rebuild\CreateDBOperator.ps1 -Server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB"}
+      shell: powershell
+      working-directory: ./github-runner

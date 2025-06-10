@@ -1,0 +1,53 @@
+name: ob_ad_update
+description: Action to create the organisational unit, ad users and groups with powershell scripts
+
+inputs:
+  default-secret-name:
+    description: 'Default secret name'
+    required: true
+  ou-name:
+    description: 'OU to create'
+    required: true
+  ouparent:
+    description: 'Parent OU'
+    required: true
+    default: 'MGMT'
+  ad-group-name:    
+    description: 'Server AD Group Name'
+    required: true
+  app-service-name:
+    description: 'App service to create if required'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script createOU
+      run: >
+         .\scripts\OB\OB_CreateOU.ps1 -DefaultSecretName ${{ inputs.default-secret-name }} -OU_Name ${{ inputs.ou-name }} -OUParent ${{ inputs.ouparent }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateADUserGroups
+      run: >
+         .\scripts\OB\OB_CreateADUserGroups.ps1 -DefaultSecretName ${{ inputs.default-secret-name }} -GroupName ${{ inputs.ad-group-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateADUsers
+      run: >
+         .\scripts\OB\OB_CreateADUsers.ps1 -DefaultSecretName ${{ inputs.default-secret-name }} -OU_Name ${{ inputs.ou-name }} -OUParent ${{ inputs.ouparent }} -GroupName ${{ inputs.ad-group-name }} -AppServiceName ${{ inputs.app-service-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script MapADUserGroups
+      run: >
+         .\scripts\OB\OB_MapADUserGroups.ps1 -DefaultSecretName ${{ inputs.default-secret-name }} OU_Name ${{ inputs.ou-name }} -GroupName ${{ inputs.ad-group-name }} -AppServiceName ${{ inputs.app-service-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script LinkOUGPO
+      run: >
+         .\scripts\OB\OB_LinkOUGPO.ps1 -DefaultSecretName ${{ inputs.default-secret-name }} -OU_Name ${{ inputs.ou-name }} -OUParent ${{ inputs.ouparent }}
+      shell: powershell
+      working-directory: ./github-runner

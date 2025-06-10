@@ -1,0 +1,45 @@
+name: restore_db_to_ag
+description: Action to restore the DBs from a backup and add them to an AG
+
+inputs:
+  pd-number:
+    description: 'PD number'
+    required: true
+  setup-bucket-name:
+    description: 'S3 bucket with DB backups in'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Copy backup files from S3 to DBS01
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\RestoreDBToAg-CopyBackupFiles.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}
+        -ArgumentList "${{ inputs.setup-bucket-name }}", "DBA"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Copy files from S3 to DBS02
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\RestoreDBToAg-CopyBackupFiles.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02.${{ inputs.full-domain-name }}
+        -ArgumentList "${{ inputs.setup-bucket-name }}", "DBA"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Restore to AG
+      run: |
+        .\scripts\Nations\OB\RestoreDB-BackupAndRestore.ps1 `
+        -primarySqlServer ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }} `
+        -secondarySqlServer ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02.${{ inputs.full-domain-name }} `
+        -s3Path "DBA" `
+        -pdNumber ${{ inputs.pd-number }}
+      shell: powershell
+      working-directory: ./github-runner

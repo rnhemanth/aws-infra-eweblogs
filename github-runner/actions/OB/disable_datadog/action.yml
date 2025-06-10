@@ -1,0 +1,28 @@
+name: disable_datadog
+description: disabled datadog agent to avoid alerts while instance is in build stage
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install SDS
+      run: >
+        .\scripts\OB\disable_datadog.ps1
+        -computerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+      shell: powershell
+      working-directory: ./github-runner

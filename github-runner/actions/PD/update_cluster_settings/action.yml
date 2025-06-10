@@ -1,0 +1,63 @@
+name: update_cluster_settings
+description: Enables always on SQLs
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  primary-cluster-ip:
+    description: 'Static IP of the primary node in the cluster'
+    required: true
+  secondary-cluster-ip:
+    description: 'Static IP of the secondary node in the cluster'
+    required: true
+  rs-cluster-ip:
+    description: 'Static IP of the replica node in the cluster'
+    required: true
+  ag1-listener-ip-1:
+    description: 'AG1 listener IP 1'
+    required: true
+  ag1-listener-ip-2:
+    description: 'AG1 listener IP 2'
+    required: true
+  ag1-listener-ip-3:
+    description: 'AG1 listener IP 3'
+    required: true
+  ag2-listener-ip-1:
+    description: 'AG2 listener IP 1'
+    required: true
+  ag2-listener-ip-2:
+    description: 'AG2 listener IP 2'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\update_cluster_settings.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}
+        -ArgumentList
+        "${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01",
+        "${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02",
+        "${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01",
+        "${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG1",
+        "${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG2",
+        "${{ inputs.primary-cluster-ip }}",
+        "${{ inputs.secondary-cluster-ip }}",
+        "${{ inputs.rs-cluster-ip }}",
+        "${{ inputs.ag1-listener-ip-1 }}",
+        "${{ inputs.ag1-listener-ip-2 }}",
+        "${{ inputs.ag1-listener-ip-3 }}",
+        "${{ inputs.ag2-listener-ip-1 }}",
+        "${{ inputs.ag2-listener-ip-2 }}";
+      shell: powershell
+      working-directory: ./github-runner

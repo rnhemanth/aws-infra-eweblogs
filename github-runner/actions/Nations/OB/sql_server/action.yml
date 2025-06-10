@@ -1,0 +1,79 @@
+name: setup-sqlserver
+description: installation of sqlserver
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  pdou:
+    description: 'PD OU Name'
+    required: true
+  authdbaccess-user:
+    description: 'Authentication Database User'
+    required: true
+  sql-user:
+    description: 'SQL user'
+    required: true
+  sql-agent:
+    description: 'SQL agent'
+    required: true
+  sql-browser:
+    description: 'SQL Browser account'
+    required: true
+  sql-cu:
+    description: 'SQL CU'
+    required: true
+  build-user:
+    description: 'build user'
+    required: true
+  server-hostname:
+    required: true
+  instance:
+    required: true
+  netbios-name:
+    required: true
+  environment-type:
+    required: true
+  default-secret-name:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    # - name: install NuGet package
+    #   run: Install-PackageProvider -Name NuGet -Force
+    #   shell: powershell
+    - name: Update NIC with DNS suffix
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\UpdateDNSSuffix.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -ArgumentList ${{ inputs.full-domain-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: install-sqlserver
+      run: >
+        $instance = "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}".ToUpper().Replace("${{ inputs.server-hostname }}","${{ inputs.instance }}");
+        .\scripts\Nations\OB\install_sql.ps1
+        -PDOU "${{ inputs.pdou }}"
+        -domain "${{ inputs.full-domain-name }}"
+        -authdbaccessaccount "${{ inputs.netbios-name }}\${{ inputs.authdbaccess-user }}$"
+        -sqlserviceaccount "${{ inputs.netbios-name }}\${{ inputs.sql-user }}$"
+        -sqlagentaccount "${{ inputs.netbios-name }}\${{ inputs.sql-agent }}$"
+        -sqlbrowseraccount "${{ inputs.netbios-name }}\${{ inputs.sql-browser }}$"
+        -sqlcuversion "${{ inputs.sql-cu }}"
+        -server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}"
+        -instance $instance
+        -buildaction_username "${{ inputs.build-user }}"
+        -environment_type "${{ inputs.environment-type }}"
+        -default_secret_name "${{ inputs.default-secret-name }}"
+      shell: powershell
+      working-directory: ./github-runner

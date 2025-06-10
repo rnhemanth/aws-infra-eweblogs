@@ -1,0 +1,25 @@
+name: Cleanup
+description: Map the computer AD objects to the computer group in AD
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  pd-number:
+    description: 'PD number'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Cleanup SQL objects"
+      run: >
+        .\scripts\PD\CleanupSQLADObjects.ps1
+        -pdNumber "${{ inputs.pd-number }}"
+        -namePrefix "${{ inputs.name-prefix }}"
+        -fullDomain "${{ inputs.full-domain-name }}"
+      shell: powershell
+      working-directory: ./github-runner

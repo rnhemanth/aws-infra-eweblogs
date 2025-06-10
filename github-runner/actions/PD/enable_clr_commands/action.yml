@@ -1,0 +1,24 @@
+name: enable_clr_reconfigure_rs01
+description: Enable_clr_reconfigure_rs01
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL CLR
+      run: Invoke-Sqlcmd -TrustServerCertificate -Query "EXEC sp_configure 'clr enabled' , '1'" -ServerInstance ${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS
+      shell: powershell
+    - name: Invoke SQL Reconfigure
+      run: Invoke-Sqlcmd -TrustServerCertificate -Query "RECONFIGURE" -ServerInstance ${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS
+      shell: powershell

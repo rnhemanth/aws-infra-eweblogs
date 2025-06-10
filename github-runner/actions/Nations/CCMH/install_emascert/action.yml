@@ -1,0 +1,42 @@
+name: install_emascert
+description: Installation of emas certificate
+
+inputs:
+  pd-number:
+    description: 'pd-number eg:cm01'
+    required: true
+  emas-pass:
+    description: 'Password for emas certificate'
+    required: true
+  country:
+    description: 'country identifier eg:im'
+    required: true
+  environment:
+    description: 'environment eg:dev,stg,prd'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install emas certificate
+      run: |
+        echo "Installing emas certificate."
+          pd=${{inputs.pd-number}}
+          pdlower=${pd,,} 
+        echo "${pdlower}"        
+          commandId1=$(aws ssm send-command --document-name "ImportCertificates" --targets '[{"Key":"resource-groups:Name","Values":["'${{inputs.country}}-${pdlower}'-emis-web-apps"]}]' --parameters '{"s3BucketName":["'${{inputs.environment}}'-nations-ssm-certificates-s3-bucket-certificates"],"pdCertKey":["patch_domains/cm009emas/"],"pfxhashtable":["@{'"'"'Cm009emas.spine.emis.thirdparty.nhs_2024.pfx'"'"'='"'"'${{ inputs.emas-pass }}'"'"';'"'"'filename2'"'"'='"'"'password'"'"'}"]}' --query 'Command.CommandId' --output text)
+          command_status="starting"
+          while [ $command_status != "Success" ]
+          do
+            echo "emas certificate still installing"
+            sleep 10
+            command_status=$(aws ssm list-commands --command-id $commandId1 --query "Commands[].StatusDetails" --output text)
+            if [ $command_status = "Failed" ]
+            then
+              echo "emas certificate install failed"
+              exit 1
+            fi
+          done
+          echo "emas certificate install complete"
+      shell: bash
+      working-directory: ./github-runner

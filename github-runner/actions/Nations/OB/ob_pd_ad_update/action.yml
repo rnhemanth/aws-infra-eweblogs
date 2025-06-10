@@ -1,0 +1,66 @@
+name: pd_ad_update
+description: Action to create the organisational unit, ad users and groups with powershell scripts
+
+inputs:
+  pd-number:
+    description: 'PD number'
+    required: true
+  default-secret-name:
+    description: 'Default secret name'
+    required: true
+  admin-secret-arn:
+    description: 'Directory Admin secret arn'
+    required: true
+  environment-type:
+    description: 'cm (ccmh) or cs (clinical services)'
+    required: true
+    default: 'gp'
+  authaccessgroup:
+    description: 'ad auth access group name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script createOU
+      run: >
+         .\scripts\Nations\OB\CreateOU.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -DefaultSecretName ${{ inputs.default-secret-name }} `
+         -SecretArn ${{ inputs.admin-secret-arn }} `
+         -EnvironmentType ${{ inputs.environment-type }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateADUserGroups
+      run: >
+         .\scripts\Nations\CreateADUserGroups.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -DefaultSecretName ${{ inputs.default-secret-name }} `
+         -SecretArn ${{ inputs.admin-secret-arn }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateADUsers
+      run: >
+         .\scripts\Nations\OB\CreateADUsers.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -DefaultSecretName ${{ inputs.default-secret-name }} `
+         -SecretArn ${{ inputs.admin-secret-arn }} `
+         -EnvironmentType ${{ inputs.environment-type }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script MapADUserGroups
+      run: >
+         .\scripts\Nations\OB\MapADUserGroups.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -SecretArn ${{ inputs.admin-secret-arn }} `
+         -EnvironmentType ${{ inputs.environment-type }} `
+         -authaccessgroup ${{ inputs.authaccessgroup }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script LinkOUGPO
+      run: >
+         .\scripts\Nations\OB\LinkOUGPO.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -SecretArn ${{ inputs.admin-secret-arn }} `
+         -EnvironmentType ${{ inputs.environment-type }}
+      shell: powershell
+      working-directory: ./github-runner

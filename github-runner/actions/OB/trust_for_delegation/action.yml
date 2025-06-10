@@ -1,0 +1,27 @@
+name: Trust Server for Delegation
+description: Trust Server for Delegations
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  cm-number:
+    description: 'Customer environment number'
+    required: true
+  name-suffix:
+    description: 'Name suffix'
+    required: true
+  OU:
+    description: 'Full OU name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Trust Server for Delegation"
+      run: >
+        .\scripts\OB\trust_for_delegation.ps1
+        -OU "${{ inputs.OU }}"
+        -InstanceHostname "${{ inputs.name-prefix }}${{ inputs.cm-number }}${{ inputs.name-suffix }}"
+      shell: powershell
+      working-directory: ./github-runner

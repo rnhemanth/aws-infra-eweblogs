@@ -1,0 +1,34 @@
+name: Map instances to AD Group
+description: Map the computer AD objects to the computer group in AD
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  cm-number:
+    description: 'Customer environment number'
+    required: true
+  name-suffix:
+    description: 'Name suffix'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Map Instance"
+      run: >
+        .\scripts\PD\MapAppInstanceToGroupsAD.ps1
+        -group "lad-db-computers"
+        -InstanceHostname "${{ inputs.name-prefix }}${{ inputs.cm-number }}${{ inputs.name-suffix }}"
+      shell: powershell
+      working-directory: ./github-runner
+    # - name: "Local admins"
+      # run: >
+      #   Invoke-Command -FilePath .\scripts\PD\AddLocalAdmins.ps1
+      #   -ComputerName ${{ inputs.name-prefix }}${{ inputs.cm-number }}${{ inputs.name-suffix }}.${{ inputs.full-domain-name }}
+      #   -ArgumentList "${{ inputs.cm-number }}"
+      # shell: powershell
+      # working-directory: ./github-runner

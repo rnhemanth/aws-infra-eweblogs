@@ -1,0 +1,51 @@
+name: application_configuration
+description: creation of service role and installation of SDS client
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+  netbios-name:
+    description: 'netbios name'
+    required: true
+  key:
+    description: 'SDS encryption key'
+    required: true
+  service-username:
+    description: 'SDS service username'
+    required: true
+  cluster-reference:
+    description: 'SDS cluster reference'
+    required: true
+  patch-hub-address:
+    description: 'SDS patch hub address'
+    required: true
+  default-secret-name:
+    description: 'default AD user secret name for password'
+    required: true
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install SDS
+      run: >
+        .\scripts\OB\install_sds.ps1
+        -computerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -Key ${{ inputs.key }}
+        -ServiceUsername ${{inputs.netbios-name }}\${{ inputs.service-username }}
+        -DefaultSecretName ${{ inputs.default-secret-name }}
+        -ClusterReference "${{ inputs.cluster-reference }}"
+        -PatchHubAddress ${{ inputs.patch-hub-address }}
+      shell: powershell
+      working-directory: ./github-runner

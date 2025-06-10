@@ -1,0 +1,32 @@
+name: enable-sql-alawys-on
+description: Enables always on SQLs
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  hostname:
+    description: 'hostname e.g. dbs01, dbs02, rs-01'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script ${{ inputs.hostname }} - then wait for reboot
+      run: |
+        $ServerType = "${{ inputs.hostname }}"
+        if ($servertype -like "*rs-01*") { .\scripts\PD\enable-always-on.ps1 -server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}" -instance "${{ inputs.name-prefix }}${{ inputs.pd-number }}RS"; Restart-Computer -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }} -Force -Wait } else { .\scripts\PD\enable-always-on.ps1 -server "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}" -instance "${{ inputs.name-prefix }}${{ inputs.pd-number }}DB"; Restart-Computer -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }} -Force }
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Sleep 30s
+      run: start-sleep -Seconds 30
+      shell: powershell

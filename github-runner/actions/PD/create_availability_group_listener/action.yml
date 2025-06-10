@@ -1,0 +1,56 @@
+name: create_availability_group_listener
+description: invoke SQl to create availability group listener
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  ag1-listener-ip-1:
+    description: 'AG1 listener IP 1'
+    required: true
+  ag1-listener-ip-2:
+    description: 'AG1 listener IP 2'
+    required: true
+  ag1-listener-ip-3:
+    description: 'AG1 listener IP 3'
+    required: true
+  ag2-listener-ip-1:
+    description: 'AG2 listener IP 1'
+    required: true
+  ag2-listener-ip-2:
+    description: 'AG2 listener IP 2'
+    required: true
+  db-netmask:
+    description: 'Netmask for the database subnets'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL create AG1 listener
+      run: |
+        $listenerPort = (Get-DbaAgListener -SqlInstance ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB  -AvailabilityGroup ${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG1).PortNumber
+        if ($listenerPort -eq 1435) {
+          Write-Host "Listener port for AG1 already exists"
+        } else {
+          Add-DbaAgListener -SqlInstance "${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB" -AvailabilityGroup "${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG1" -Port 1435 -IPAddress ${{ inputs.ag1-listener-ip-1 }},${{ inputs.ag1-listener-ip-2 }},${{ inputs.ag1-listener-ip-3 }} -SubnetMask ${{ inputs.db-netmask }},${{ inputs.db-netmask }},${{ inputs.db-netmask }}
+        }
+      shell: powershell
+
+    - name: Invoke SQL create AG2 listener
+      run: |
+        $listenerPort = (Get-DbaAgListener -SqlInstance ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB  -AvailabilityGroup ${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG2).PortNumber
+        if ($listenerPort -eq 1436) {
+          Write-Host "Listener port for AG2 already exists"
+        } else {
+          Add-DbaAgListener -SqlInstance "${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB" -AvailabilityGroup "${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG2" -Port 1436 -IPAddress ${{ inputs.ag2-listener-ip-1 }},${{ inputs.ag2-listener-ip-2 }} -SubnetMask ${{ inputs.db-netmask }},${{ inputs.db-netmask }}
+        }
+      shell: powershell

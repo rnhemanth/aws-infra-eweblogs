@@ -1,0 +1,33 @@
+name: spn_settings_exa
+description: Sets the SPN settings for EXA
+
+inputs:
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: '1'
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  sql-user:
+    description: 'SQL user'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+  admin-secret-arn:
+    description: 'Directory Admin secret arn'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Add SPN to AD
+      run: >
+        .\scripts\Nations\spn-add.ps1
+        -sqlserviceaccount "${{ inputs.sql-user }}"
+        -fullDomain "${{ inputs.full-domain-name }}"
+        -prefix "${{ inputs.name-prefix }}${{ inputs.pd-number }}"
+        -AdminSecretName "${{ inputs.admin-secret-arn }}"
+      shell: powershell
+      working-directory: ./github-runner

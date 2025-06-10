@@ -1,0 +1,34 @@
+name: Map instances to AD Group
+description: Map the computer AD objects to the computer group in AD
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  pd-number:
+    description: 'PD number'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Instance hostname'
+    required: true
+  environment-type:
+    description: 'cm (ccmh) or cs (clinical services)'
+    required: true
+  admin-secret-arn:
+    description: 'Directory Admin secret arn'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Map Instance"
+      run: >
+        .\scripts\Nations\MapAppInstanceToGroupsAD.ps1
+        -group "${{ inputs.environment-type}}-app-computers"
+        -InstanceHostname "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}"
+        -SecretArn ${{ inputs.admin-secret-arn }}
+      shell: powershell
+      working-directory: ./github-runner

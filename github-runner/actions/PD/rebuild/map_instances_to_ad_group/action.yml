@@ -1,0 +1,44 @@
+name: Map instances to AD Group
+description: Map the computer AD objects to the computer group in AD
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  pd-number:
+    description: 'PD number'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  hostname:
+    description: 'hostname e.g. dbs01, dbs02, rs-01'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Map ${{ inputs.hostname }}"
+      run: >
+        .\scripts\PD\MapInstanceToGroupsAD.ps1
+        -pdNumber "${{ inputs.pd-number }}"
+        -InstanceHostname "${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: "Local admins ${{ inputs.hostname }}"
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\AddLocalAdmins.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }}
+        -ArgumentList "${{ inputs.pd-number }}"
+      shell: powershell
+      working-directory: ./github-runner
+
+
+    - name: "Create folders"
+      run: |
+        $ServerType = "${{ inputs.hostname }}"
+        if ($servertype -like "*rs-01*") { Write-Host "This is a RS server, folders do not need creating" } else { Invoke-Command -FilePath .\scripts\PD\CreateFolders.ps1 -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.hostname }}.${{ inputs.full-domain-name }} }
+      shell: powershell
+      working-directory: ./github-runner
+

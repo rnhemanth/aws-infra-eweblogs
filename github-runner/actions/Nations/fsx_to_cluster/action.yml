@@ -1,0 +1,48 @@
+name: create-cluster
+description: run the create cluster script
+
+inputs:
+  cluster-name:
+    description: 'SQL server cluster name'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  witness-dns:
+    description: 'Witness share FS'
+    required: true
+  environment:
+    description: 'name of the environment'
+    required: true
+  country:
+    description: 'name of the country'
+    required: true
+  admin-secret-arn:
+    description: 'Directory Admin secret arn'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create witness folders
+      run: |
+        $envUpper = "${{ inputs.environment }}".ToUpper()
+        $countryUpper = "${{ inputs.country }}".ToUpper()
+        New-Item -ItemType Directory -Force -Path \\${{inputs.witness-dns}}\share\AWS_$($countryUpper)_$($envUpper);
+        Write-host "Waiting 10 minutes"
+        Start-Sleep 600
+      shell: powershell
+
+    - name: Add File Share witness
+      run: >
+        $envUpper = "${{ inputs.environment }}".ToUpper(); 
+        $countryUpper = "${{ inputs.country }}".ToUpper();
+        .\scripts\Nations\AddFSWtoCluster.ps1 `
+        -SecretArn ${{ inputs.admin-secret-arn }} `
+        -domainName ${{ inputs.full-domain-name }} `
+        -clusterName ${{ inputs.cluster-name }} `
+        -country $countryUpper `
+        -witness ${{inputs.witness-dns}} `
+        -pd $envUpper 
+      shell: powershell
+      working-directory: ./github-runner

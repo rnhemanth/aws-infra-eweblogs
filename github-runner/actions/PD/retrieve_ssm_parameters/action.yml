@@ -1,0 +1,11 @@
+name: retrieve-ssm-parameters
+description: retrieves SSM parameters and exports them as an environment variable
+
+runs:
+  using: "composite"
+  steps:
+    - name: retrieve SSM parameters
+      shell: bash
+      run: |
+        echo "TEST_DECRYPT_PARAM=$(aws ssm get-parameter --name "/tf/output/TEST_DECRYPT_PARAM" --output text --query Parameter.Value)" >> "$GITHUB_OUTPUT"
+        echo "TEST_ENCRYPT_PARAM=$(aws ssm get-parameter --name "/tf/output/TEST_ENCRYPT_PARAM" --output text --query Parameter.Value --with-decryption)" >> "$GITHUB_OUTPUT"

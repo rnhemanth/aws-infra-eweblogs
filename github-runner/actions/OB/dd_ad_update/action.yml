@@ -1,0 +1,16 @@
+name: dd_ad_update
+description: Action to create the organisational unit, ad users and groups with powershell scripts
+
+inputs:
+  ad_group_name:
+    description: 'AD Group to add dd GMSA user to'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script map_dd_user_groups
+      run: >
+         .\scripts\OB\map_dd_user_groups.ps1 -ad_group_name ${{ inputs.ad_group_name }}
+      shell: powershell
+      working-directory: ./github-runner

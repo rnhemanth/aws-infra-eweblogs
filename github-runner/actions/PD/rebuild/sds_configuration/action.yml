@@ -1,0 +1,55 @@
+name: sds_configuration
+description: configuration of SDS
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  authdbaccess-user:
+    description: 'Authentication Database User'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+  netbios-name:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke grant SDS service account login as service rights
+      run: >
+        .\scripts\PD\grant-SeServiceLogonRight.ps1
+        -computerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -username "${{ inputs.netbios-name }}\${{ inputs.authdbaccess-user }}$"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Move SDS core resources xml
+      run: >
+        Invoke-Command -ScriptBlock { Copy-Item .\scripts\PD\Move-Core-Resources.xml
+        -Destination (New-Item -type directory ('\\${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}\C$\EMIS\Clustask\MoveCoreResource\Tasks\') -Force)}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Move core resources script
+      run: >
+        Invoke-Command -ScriptBlock { Copy-Item .\scripts\PD\MoveCoreResource.ps1
+        -Destination (New-Item -type directory ('\\${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}\C$\EMIS\Clustask\MoveCoreResource\Scripts\') -Force) }
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke SCH Command
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\rebuild\move_core_schtask.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }};
+      shell: powershell
+      working-directory: ./github-runner

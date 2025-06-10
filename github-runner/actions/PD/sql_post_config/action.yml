@@ -1,0 +1,29 @@
+name: sql_post_config
+description: Run Post SQL Config Scripts
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'server hostname'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: install-sqlserver
+      run: >
+        .\scripts\PD\SQL_PostConfig.ps1
+        -DB_server "${{inputs.name-prefix}}${{inputs.pd-number}}${{inputs.server-hostname}}"
+        -Domain "${{inputs.full-domain-name}}"
+        -PDNum "${{inputs.pd-number}}"
+      shell: powershell
+      working-directory: ./github-runner
