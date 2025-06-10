@@ -126,7 +126,7 @@ jobs:
         uses: ./github-runner/actions/terragrunt-plan
         with:
           terraform-folder: "../eweblogs/terraform"
-          terragrunt-config: "../terragrunt.hcl"
+          terragrunt-config: "./terragrunt.hcl"
 
   deploy-network:
     name: Deploy - PRD ${{ github.event.inputs.DEPLOY }}
