@@ -1,0 +1,47 @@
+name: install_portalsdkcert
+description: Installation of PortalSDK certificate
+
+inputs:
+  pd-number:
+    description: 'pd-number eg:cm01'
+    required: true
+  netbios-name:
+    description: 'eg EMISDEVENG'
+    required: true
+  portalsdk-pass:
+    description: 'password for portalsdk'
+    required: true
+  ou-path:
+    description: 'dev,DC=england,DC=emis-web,DC=com'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install PortalSDK certificate
+      run: |
+        echo "Installing PortalSDK certificate."
+        instanceId1=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=*admgmt01*' 'Name=instance-state-name,Values=running' --query 'Reservations[].Instances[].[InstanceId]' --output text)
+          commandId1=$(aws ssm send-command --instance-ids $instanceId1 --document-name 'ImportPortalSDKCertificates' --parameters '{"certPwd":["${{ inputs.portalsdk-pass }}"],"certName":["portalsdk.emishealth.com_2024.pfx"],"pd":["${{ inputs.pd-number }}"],"serviceUser":["${{ inputs.netbios-name}}\\EMISWeb-${{ inputs.pd-number }}"],"searchBase":["'"'"'OU=App_Servers,OU=${{ inputs.pd-number }},OU=CCMH,OU=${{ inputs.netbios-name}},DC=${{ inputs.ou-path}}'"'"'"]}' --query 'Command.CommandId' --output text)
+          command_status="starting"
+          while [ $command_status != "Success" ]
+          do
+            echo "PortalSDK certificate still installing"
+            sleep 10
+            command_status=$(aws ssm get-command-invocation --command-id $commandId1 --instance-id $instanceId1 --query 'Status' --output text)
+            if [ $command_status = "Failed" ]
+            then
+              echo "PortalSDK certificate install failed"
+              aws ssm list-command-invocations --command-id $commandId1 --details --query "CommandInvocations[*].CommandPlugins[*].Output[]" --output text
+              exit 1
+            elif [ $command_status = "TimedOut" ]
+            then
+              echo "PortalSDK certificate install TimedOut"
+              aws ssm list-command-invocations --command-id $commandId1 --details --query "CommandInvocations[*].CommandPlugins[*].Output[]" --output text
+              exit 1
+            fi
+          done
+          echo "PortalSDK certificate install complete"
+          aws ssm list-command-invocations --command-id $commandId1 --details --query "CommandInvocations[*].CommandPlugins[*].Output[]" --output text
+      shell: bash
+      working-directory: ./github-runner

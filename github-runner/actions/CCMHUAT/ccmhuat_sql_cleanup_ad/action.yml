@@ -1,0 +1,25 @@
+name: Cleanup
+description: Map the computer AD objects to the computer group in AD
+
+inputs:
+  customer-number:
+    description: 'Customer system number'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Cleanup SQL objects"
+      run: >
+        .\scripts\CCMHUAT\CleanupSQLADObjects.ps1
+        -customerNumber "${{ inputs.customer-number }}"
+        -namePrefix "${{ inputs.name-prefix }}"
+        -fullDomain "${{ inputs.full-domain-name }}"
+      shell: powershell
+      working-directory: ./github-runner

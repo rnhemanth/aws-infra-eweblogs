@@ -1,0 +1,66 @@
+name: restore_db_to_ag
+description: Action to restore the DBs from a backup and add them to an AG
+
+inputs:
+  pd-number:
+    description: 'PD number'
+    required: true
+  setup-bucket-name:
+    description: 'S3 bucket with DB backups in'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: true
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Copy backup files from S3 to DBS01
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\RestoreDBToAg-CopyBackupFiles.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}
+        -ArgumentList "${{ inputs.setup-bucket-name }}", "DBA"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Copy files from S3 to DBS02
+      run: >
+        Invoke-Command -FilePath .\scripts\PD\RestoreDBToAg-CopyBackupFiles.ps1
+        -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02.${{ inputs.full-domain-name }}
+        -ArgumentList "${{ inputs.setup-bucket-name }}", "DBA"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Restore to AG
+      run: |
+        $primarySqlServer = Invoke-Command -ScriptBlock {
+          $primaryHost = ($(Get-ClusterGroup).OwnerNode | Where-Object {$_.name  -Like "*DBS01"}).Name[0]
+          $primarySqlServer = "$($primaryHost).${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB"
+          Return $primarySqlServer
+        } -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}
+
+        $secondarySqlServer = Invoke-Command -ScriptBlock {
+          $secondaryHost = (Get-ClusterNode | Where-Object { $_.State -eq "Up" -and $_.Name -ne ($(Get-ClusterGroup).OwnerNode | Where-Object {$_.name  -Like "*DBS01"}).Name[0] } )[0].Name
+          $secondarySqlServer = "$($secondaryHost).${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB"
+          Return $secondarySqlServer
+        } -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}
+
+        Invoke-Command -ScriptBlock {
+          $primaryHost = ($(Get-ClusterGroup).OwnerNode | Where-Object {$_.name  -Like "*DBS01"}).Name[0]
+          get-clustergroup | Move-ClusterGroup -Node $primaryHost
+        } -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}
+
+        Write-Host "Backup and restore from primary server: $($primarySqlServer), secondary server: $($secondarySqlServer)"
+
+        .\scripts\CCMH\RestoreDBToAg2-BackupAndRestore.ps1 `
+        -primarySqlServer $primarySqlServer `
+        -secondarySqlServer $secondarySqlServer `
+        -s3Path "DBA" `
+        -pdNumber ${{ inputs.pd-number }} `
+        -AG1name ${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG1 `
+        -AG2name ${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG2
+      shell: powershell
+      working-directory: ./github-runner

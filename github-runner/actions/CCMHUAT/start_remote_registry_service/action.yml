@@ -1,0 +1,26 @@
+name: start_remote_registry_service
+description: Starts the remote registry service
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  name-suffix:
+    description: 'Name suffix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Start remote registry service
+      run: Get-Service -Name RemoteRegistry -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.name-suffix }}.${{ inputs.full-domain-name }} | Start-Service
+      shell: powershell

@@ -1,0 +1,35 @@
+name: create_availability_groups
+description: Executes the SQL to create the availability groups
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  EnvType:
+    description: 'Environment type -  EN:England GPLive, NI:Northern Ireland, CM:CCMH, JY:Jersey, IM:Isle of Man, GI:Gibralta'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke SQL
+      run: >
+        Invoke-Sqlcmd -TrustServerCertificate -InputFile .\scripts\CCMH\create-sql-AG.sql
+        -ServerInstance ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB
+        -Variable
+        'PrimaryServername=${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB',
+        'SecondaryServername=${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02\${{ inputs.name-prefix }}${{ inputs.pd-number }}DB',
+        'RSServername=${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS',
+        'AG1name=${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG1',
+        'AG2name=${{ inputs.name-prefix }}${{ inputs.pd-number }}-AG2',
+        'DomainName=${{ inputs.full-domain-name }}',
+        'EnvType=${{ inputs.Envtype }}'
+      shell: powershell
+      working-directory: ./github-runner

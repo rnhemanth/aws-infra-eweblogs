@@ -1,0 +1,32 @@
+name: agentjob_dboperator
+description: Runs the update agent job settings, add db operator
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script UpdateAgentJobOwner
+      run: >
+        .\scripts\CCMH\UpdateAgentJobOwner_rs.ps1
+        -ReplicaServer "${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS"
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateDBOperator
+      run: >
+        .\scripts\CCMH\CreateDBOperator_rs.ps1
+        -ReplicaServer "${{ inputs.name-prefix }}${{ inputs.pd-number }}RS-01.${{ inputs.full-domain-name }}\${{ inputs.name-prefix }}${{ inputs.pd-number }}RS"
+      shell: powershell
+      working-directory: ./github-runner

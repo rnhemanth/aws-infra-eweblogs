@@ -1,0 +1,117 @@
+name: Configure AD
+description: Action to create AD organisational units, groups, users, map users to groups, create gpo and setup fine grained policy.
+# Usage: run from windows self-hosted runner
+inputs:
+  ad-admin-secret-arn:
+    description: 'AD Admin password secret ARN'
+    required: true
+  default-secret-arn:
+    description: 'AD default password secret ARN for users'
+    required: true
+  csv-file-path:
+    description: 'Path to the csv files used as inputs'
+    required: true
+  gpo-backup-zip:
+    description: 'GPO Backup Zip file with the path'
+    required: true
+  gpo-migration-table:
+    description: 'GPO migration table name'
+    required: true
+  password-policy-group:
+    description: 'Password policy group for ADFineGrainedPasswordPolicySubject'
+    required: true
+  map-gmsa-computer-groups:
+    description: "'computer groups to map gmsa permissions e.g. 'bastion-computers','wsus-computers'"
+    required: true
+  domain-joiner-ous:
+    description: "OUs to delegate domain joiner to e.g. 'OU=Computers','OU=MGMT'"
+    required: true
+  laps-ous:
+    description: "OUs to apply LAPS to e.g. 'OU=Computers','OU=MGMT'"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup OU in AD - Invoke CreateOU powershell script with ADOU csv from CsvFilePath
+      run: >
+        .\scripts\MAD\CreateOU.ps1
+        -CsvFilePath ${{ inputs.csv-file-path }}
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Setup Group in AD - Invoke CreateGroup powershell script with ADGroup csv from CsvFilePath
+      run: >
+        .\scripts\MAD\CreateGroup.ps1
+        -CsvFilePath ${{ inputs.csv-file-path }}
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Setup User in AD - Invoke CreateUser powershell script with ADUser csv from CsvFilePath
+      run: >
+        .\scripts\MAD\CreateUser.ps1
+        -CsvFilePath ${{ inputs.csv-file-path }}
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+        -DefaultSecretArn ${{ inputs.default-secret-arn }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Setup GMSA in AD - Invoke CreateGroup powershell script with ADGMSA csv from CsvFilePath
+      run: >
+        .\scripts\MAD\CreateGMSA.ps1
+        -CsvFilePath ${{ inputs.csv-file-path }}
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Setup GMSA in AD - Invoke script MapGMSAPerms powershell script
+      run: >
+        .\scripts\MAD\MapGMSAPerms.ps1
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+        -computer_groups ${{ inputs.map-gmsa-computer-groups }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Add Users to Groups in AD - Invoke script MapUserGroups powershell script with GroupUsers csv from CsvFilePath
+      run: >
+        .\scripts\MAD\MapUserGroups.ps1
+        -CsvFilePath ${{ inputs.csv-file-path }}
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Setup GPO in AD - Invoke script BootstrapGPO powershell script with ADGRPO csv from CsvFilePath
+      run: >
+        .\scripts\MAD\BootStrapGPO.ps1
+        -CsvFilePath ${{ inputs.csv-file-path }}
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+        -GpoBakupZipFile ${{ inputs.gpo-backup-zip}}
+        -GpoMigrationTable ${{ inputs.gpo-migration-table }}
+        -PasswordPolicyGroup ${{ inputs.password-policy-group }}
+      working-directory: ./github-runner
+      shell: powershell 
+
+    - name: Delinea password-changer setup - Invoke script DelineaConfig powershell script
+      run: >
+        .\scripts\MAD\DelineaConfig.ps1
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: Delegate domain-joiner permissions - Invoke script DomainJoinerConfig powershell script
+      run: >
+        .\scripts\MAD\DomainJoinerConfig.ps1
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+        -DomainJoinerOUs ${{ inputs.domain-joiner-ous }}
+      working-directory: ./github-runner
+      shell: powershell
+
+    - name: LAPS - Invoke script LAPSconfig powershell script
+      run: >
+        .\scripts\MAD\LAPSconfig.ps1
+        -SecretArn ${{ inputs.ad-admin-secret-arn }}
+        -LAPSOUs ${{ inputs.laps-ous}}
+      working-directory: ./github-runner
+      shell: powershell

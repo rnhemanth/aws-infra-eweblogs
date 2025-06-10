@@ -1,0 +1,40 @@
+name: enable-sql-alawys-on
+description: Enables always on SQLs
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script DBS01
+      run: >
+        .\scripts\PD\enable-always-on.ps1
+        -server "${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01.${{ inputs.full-domain-name }}"
+        -instance "${{ inputs.name-prefix }}${{ inputs.pd-number }}DB";
+        Restart-Computer -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS01 -Force
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script DBS02
+      run: >
+        .\scripts\PD\enable-always-on.ps1
+        -server "${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02.${{ inputs.full-domain-name }}"
+        -instance "${{ inputs.name-prefix }}${{ inputs.pd-number }}DB";
+        Restart-Computer -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}DBS02 -Force
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Sleep 30s
+      run: start-sleep -Seconds 30
+      shell: powershell

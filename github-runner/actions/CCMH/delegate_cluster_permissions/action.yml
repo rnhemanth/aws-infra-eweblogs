@@ -1,0 +1,33 @@
+name: delegate_cluster_permissions
+description: execute delegate cluster permissions command
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  ou:
+    description: 'Server OU name'
+    required: true
+  pdou:
+    description: 'PD OU Name'
+    required: true
+  default-secret-name:
+    description: 'Name of the default secret in AWS secrets manager'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke delegate cluster permissions script
+      run: >
+        .\scripts\CCMH\delegate_cluster_permissions.ps1
+        -OU ${{ inputs.ou }}
+        -PDOU ${{ inputs.pdou }}
+        -ClusterObjectName ${{ inputs.name-prefix }}${{ inputs.pd-number }}-CLS
+        -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner

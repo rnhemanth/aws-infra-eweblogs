@@ -1,0 +1,40 @@
+name: ccmh_uat_ad_update
+description: Action to create the organisational unit, ad users and groups with powershell scripts
+
+inputs:
+  default-secret-name:
+    description: 'Default secret name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script createOU
+      run: >
+         .\scripts\CCMHUAT\CreateOU.ps1 -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateADUserGroups
+      run: >
+         .\scripts\CCMHUAT\CreateADUserGroups.ps1 -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script CreateADUsers
+      run: >
+         .\scripts\CCMHUAT\CreateADUsers.ps1 -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script MapADUserGroups
+      run: >
+         .\scripts\CCMHUAT\MapADUserGroups.ps1 -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner
+
+    - name: Invoke script LinkOUGPO
+      run: >
+         .\scripts\CCMHUAT\LinkOUGPO.ps1 -DefaultSecretName ${{ inputs.default-secret-name }}
+      shell: powershell
+      working-directory: ./github-runner

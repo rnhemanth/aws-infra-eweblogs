@@ -1,0 +1,40 @@
+name: update_ena_driver
+description: Update Elastic Network Adapter (ENA) driver
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+  proxy-hostname:
+    description: 'Proxy address'
+    required: true
+  proxy-port:
+    description: 'Proxy port'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Update Elastic Network Adapter (ENA) driver
+      run: >
+        .\scripts\CCMH\update_ena_driver.ps1
+        -computerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -ProxyHostname ${{ inputs.proxy-hostname }}
+        -ProxyPort ${{ inputs.proxy-port }};
+        Restart-Computer -ComputerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }} -Force
+      shell: powershell
+      working-directory: ./github-runner
+    - name: Sleep 30s
+      run: start-sleep -Seconds 60
+      shell: powershell

@@ -1,0 +1,45 @@
+name: install_nessus
+description: Installation of Nessus
+
+inputs:
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+    default: ''
+  pd-number:
+    description: 'PD number'
+    required: false
+    default: ''
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  server-hostname:
+    description: 'Server hostname'
+    required: true
+  install-source:
+    description: 'Nessus installation path'
+    required: true
+  key:
+    description: 'Nessus Key'
+    required: true
+  proxy-hostname:
+    description: 'Proxy address'
+    required: true
+  proxy-port:
+    description: 'Proxy port'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Nessus
+      run: >
+        .\scripts\Bastion\install_nessus.ps1
+        -computerName ${{ inputs.name-prefix }}${{ inputs.pd-number }}${{ inputs.server-hostname }}.${{ inputs.full-domain-name }}
+        -InstallSource ${{ inputs.install-source }}
+        -Key ${{ inputs.key }}
+        -ProxyHostname ${{ inputs.proxy-hostname }}
+        -ProxyPort ${{ inputs.proxy-port }}
+        -PDNumber ${{ inputs.pd-number }}
+      shell: powershell
+      working-directory: ./github-runner
