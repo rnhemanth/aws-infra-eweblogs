@@ -1,0 +1,17 @@
+<Domains>
+  <Domain>
+   <NBName>EMISDEVENG</NBName>
+   <FQDN>dev.england.emis-web.com</FQDN>
+   <OU>OU=Servers,dc=dev,dc=england,dc=emis-web,dc=com</OU>
+ </Domain>
+   <Domain>
+   <NBName>EMISSTGENG</NBName>
+   <FQDN>stg.england.emis-web.com</FQDN>
+   <OU>OU=Servers,dc=stg,dc=england,dc=emis-web,dc=com</OU>
+ </Domain>
+ <Domain>
+   <NBName>EMISPRDENG</NBName>
+   <FQDN>england.emis-web.com</FQDN>
+   <OU>OU=Servers,dc=england,dc=emis-web,dc=com</OU>
+ </Domain>
+</Domains>

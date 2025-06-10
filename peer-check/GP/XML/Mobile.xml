@@ -1,0 +1,206 @@
+<Environments>
+	<Environment Name="Barts UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/barts-uat/"/>
+		<Server Name="SFBAUAT01DB"/>
+	</Environment>
+	<Environment Name="Blackpool Training">
+		<Url Name="https://emismobile.e-mis.co.uk/blackpool-trn/"/>
+		<Server Name="NYBPTRN01DB"/>
+	</Environment>
+	<Environment Name="Blackpool UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/blackpool-uat/"/>
+		<Server Name="NYBPUAT01DB"/>
+	</Environment>
+	<Environment Name="Borders Training">
+		<Url Name="https://emismobile.e-mis.co.uk/borders-trn/"/>
+		<Server Name="SFBOTRN01DB"/>
+	</Environment>
+	<Environment Name="Borders UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/borders-uat/"/>
+		<Server Name="SFBOUAT01DB"/>
+	</Environment>
+	<Environment Name="Bristol Training">
+		<Url Name="https://emismobile.e-mis.co.uk/bristol-trn/"/>
+		<Server Name="SFBSTRN01DB"/>
+	</Environment>
+	<Environment Name="Bristol UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/bristol-uat/"/>
+		<Server Name="SFBSUAT01DB"/>
+	</Environment>
+	<Environment Name="Bromley Training">
+		<Url Name="https://emismobile.e-mis.co.uk/bromley-trn/"/>
+		<Server Name="SFBRTRN01DB"/>
+	</Environment>
+	<Environment Name="Bromley UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/bromley-uat/"/>
+		<Server Name="SFBRUAT01DB"/>
+	</Environment>
+	<Environment Name="Central London Training">
+		<Url Name="https://emismobile.e-mis.co.uk/clondon-trn/"/>
+		<Server Name="SFCLTRN01DB"/>
+	</Environment>
+	<Environment Name="Central London UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/clondon-uat/"/>
+		<Server Name="SFCLUAT01DB"/>
+	</Environment>
+	<Environment Name="Central Manchester Training">
+		<Url Name="https://emismobile.e-mis.co.uk/cmanchester-trn/"/>
+		<Server Name="SFCMTRN01DB"/>
+	</Environment>
+	<Environment Name="Central Manchester UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/cmanchester-uat/"/>
+		<Server Name="SFCMUAT01DB"/>
+	</Environment>
+	<Environment Name="Cheshire	Training">
+		<Url Name="https://emismobile.e-mis.co.uk/cheshire-trn/"/>
+		<Server Name="SFCWTRN01DB"/>
+	</Environment>
+	<Environment Name="Cheshire	UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/cheshire-uat/"/>
+		<Server Name="SFCWUAT01DB"/>
+	</Environment>
+	<Environment Name="Community Training">
+		<Url Name="https://emismobile.e-mis.co.uk/community-trn/"/>
+		<Server Name="SFCOTRN01DB"/>
+	</Environment>
+	<Environment Name="Community UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/community-uat/"/>
+		<Server Name="SFCOUAT01DB"/>
+	</Environment>
+	<Environment Name="Croydon Training">
+		<Url Name="https://emismobile.e-mis.co.uk/croydon-trn/"/>
+		<Server Name="SFCRTRN01DB"/>
+	</Environment>
+	<Environment Name="Croydon UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/croydon-uat/"/>
+		<Server Name="SFCRUAT01DB"/>
+	</Environment>
+	<Environment Name="East Lancs Training">
+		<Url Name="https://emismobile.e-mis.co.uk/eastlancs-trn/"/>
+		<Server Name="SFEATRN01DB"/>
+	</Environment>
+	<Environment Name="East Lancs UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/eastlancs-uat/"/>
+		<Server Name="SFEAUAT01DB"/>
+	</Environment>
+	<Environment Name="East London Foundation Trust Training">
+		<Url Name="https://emismobile.e-mis.co.uk/eastlondon-trn/"/>
+		<Server Name="SFELTRN01DB"/>
+	</Environment>
+	<Environment Name="East London Foundation Trust UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/eastlondon-uat/"/>
+		<Server Name="SFELUAT01DB"/>
+	</Environment>
+	<Environment Name="Gateshead Training">
+		<Url Name="https://emismobile.e-mis.co.uk/gateshead-trn/"/>
+		<Server Name="SFGHTRN01DB"/>
+	</Environment>
+	<Environment Name="Gateshead UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/gateshead-uat/"/>
+		<Server Name="SFGHUAT01DB"/>
+	</Environment>
+	<Environment Name="IOM Training">
+		<Url Name="https://emismobile.e-mis.co.uk/iom-trn/"/>
+		<Server Name="NYIMTRN01DB"/>
+	</Environment>
+	<Environment Name="IOM UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/iom-uat/"/>
+		<Server Name="NYIMUAT01DB"/>
+	</Environment>
+	<Environment Name="Liverpool Heart and Chest Training">
+		<Url Name="https://emismobile.e-mis.co.uk/liverpoolhc-trn/"/>
+		<Server Name="SFLHTRN01DB"/>
+	</Environment>
+	<Environment Name="Liverpool Heart and Chest UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/liverpoolhc-uat/"/>
+		<Server Name="SFLHUAT01DB"/>
+	</Environment>
+	<Environment Name="Northern Ireland Training">
+		<Url Name="https://emismobile.e-mis.co.uk/ni-trn/"/>
+		<Server Name="SFNITRN01DB"/>
+	</Environment>
+	<Environment Name="Northern Ireland UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/ni-uat/"/>
+		<Server Name="SFNIUAT01DB"/>
+	</Environment>
+	<Environment Name="North Somerset Training">
+		<Url Name="https://emismobile.e-mis.co.uk/nsomerset-trn/"/>
+		<Server Name="NYNSTRN01DB"/>
+	</Environment>
+	<Environment Name="North Somerset UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/nsomerset-uat/"/>
+		<Server Name="NYNSUAT01DB"/>
+	</Environment>
+	<Environment Name="Pennine Acute Training">
+		<Url Name="https://emismobile.e-mis.co.uk/pennineacute-trn/"/>
+		<Server Name="SFPATRN01DB"/>
+	</Environment>
+	<Environment Name="Pennine Acute UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/pennineacute-uat/"/>
+		<Server Name="SFPAUAT01DB"/>
+	</Environment>
+	<Environment Name="Scotland Training">
+		<Url Name="https://emismobile.e-mis.co.uk/scotland-trn/"/>
+		<Server Name="SFSCTRN01DB"/>
+	</Environment>
+	<Environment Name="Scotland UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/scotland-uat/"/>
+		<Server Name="SFSCUAT01DB"/>
+	</Environment>
+	<Environment Name="Sirona Training">
+		<Url Name="https://emismobile.e-mis.co.uk/sirona-trn/"/>
+		<Server Name="SFSITRN01DB"/>
+	</Environment>
+	<Environment Name="Sirona UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/sirona-uat/"/>
+		<Server Name="SFSIUAT01DB"/>
+	</Environment>
+	<Environment Name="South Tyneside Training">
+		<Url Name="https://emismobile.e-mis.co.uk/styneside-trn/"/>
+		<Server Name="SFSTTRN01DB"/>
+	</Environment>
+	<Environment Name="South Tyneside UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/styneside-uat/"/>
+		<Server Name="SFSTUAT01DB"/>
+	</Environment>
+	<Environment Name="Southport Training">
+		<Url Name="https://emismobile.e-mis.co.uk/southport-trn/"/>
+		<Server Name="NYSOTRN01DB"/>
+	</Environment>
+	<Environment Name="Southport UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/southport-uat/"/>
+		<Server Name="NYSOUAT01DB"/>
+	</Environment>
+	<Environment Name="Tameside Training">
+		<Url Name="https://emismobile.e-mis.co.uk/tameside-trn/"/>
+		<Server Name="SFTMTRN01DB"/>
+	</Environment>
+	<Environment Name="Tameside UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/tameside-uat/"/>
+		<Server Name="SFTMUAT01DB"/>
+	</Environment>
+	<Environment Name="Stockport Training">
+		<Url Name="https://emismobile.e-mis.co.uk/stockport-trn/"/>
+		<Server Name="SFSPTRN01DB"/>
+	</Environment>
+	<Environment Name="Stockport UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/stockport-uat/"/>
+		<Server Name="SFSPUAT01DB"/>
+	</Environment>
+	<Environment Name="Tayside Training">
+		<Url Name="https://emismobile.e-mis.co.uk/tayside-trn/"/>
+		<Server Name="SFTSTRN01DB"/>
+	</Environment>
+	<Environment Name="Tayside UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/tayside-uat/"/>
+		<Server Name="SFTSUAT01DB"/>
+	</Environment>
+	<Environment Name="Trafford Training">
+		<Url Name="https://emismobile.e-mis.co.uk/trafford-trn/"/>
+		<Server Name="SFTFTRN01DB"/>
+	</Environment>
+	<Environment Name="Trafford UAT">
+		<Url Name="https://emismobile.e-mis.co.uk/trafford-uat/"/>
+		<Server Name="SFTFUAT01DB"/>
+	</Environment>
+</Environments>

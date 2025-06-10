@@ -1,0 +1,82 @@
+<PortCheck>
+ <Domain id="CM01">
+  <Location name="Spine">
+   <Site name="All">
+    <Port name="443">lrs-sync.national.ncrs.nhs.uk</Port>
+    <Port name="443">alerts-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">mm-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">pds-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">pds-sync.national.ncrs.nhs.uk</Port>
+    <Port name="443">psis-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">psis-umasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">rmmid.national.ncrs.nhs.uk</Port>
+    <Port name="636">ldap.national.ncrs.nhs.uk</Port>
+   </Site>
+  </Location>
+  <Location name="IndexEndpoints">
+   <Site name="Scheduler">
+    <Port name="33980">england-cm01-nlb-51f4520fa20be525.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="EmisWeb">
+    <Port name="33966">england-cm01-nlb-51f4520fa20be525.elb.eu-west-2.amazonaws.com</Port>
+    <Port name="33968">england-cm01-nlb-51f4520fa20be525.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="EMAS">
+    <Port name="443">england-cm01-nlb-51f4520fa20be525.elb.eu-west-2.amazonaws.com</Port>
+    <Port name="33967">england-cm01-nlb-51f4520fa20be525.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="S3 DOCS">
+    <Port name="443">england-cm01-nlb-docs-8ffdae2d5820e388.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="EmisConnect">
+    <Port name="33956">emisconnectapps.white.local</Port>
+   </Site>
+   <Site name="GPES">
+    <Port name="33989">gpescenapp.white.local</Port>
+   </Site>
+   <Site name="EmisConnectAPI">
+    <Port name="8085">emisconnectapi.emishosting.com</Port>
+   </Site>
+  </Location>
+ </Domain>
+ <Domain id="CM02">
+  <Location name="Spine">
+   <Site name="All">
+    <Port name="443">lrs-sync.national.ncrs.nhs.uk</Port>
+    <Port name="443">alerts-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">mm-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">pds-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">pds-sync.national.ncrs.nhs.uk</Port>
+    <Port name="443">psis-rmasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">psis-umasync.national.ncrs.nhs.uk</Port>
+    <Port name="443">rmmid.national.ncrs.nhs.uk</Port>
+    <Port name="636">ldap.national.ncrs.nhs.uk</Port>
+   </Site>
+  </Location>
+  <Location name="IndexEndpoints">
+   <Site name="Scheduler">
+    <Port name="33980">england-cm02-nlb-b184846026c3d0a5.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="EmisWeb">
+    <Port name="33966">england-cm02-nlb-b184846026c3d0a5.elb.eu-west-2.amazonaws.com</Port>
+    <Port name="33968">england-cm02-nlb-b184846026c3d0a5.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="EMAS">
+    <Port name="443">england-cm02-nlb-b184846026c3d0a5.elb.eu-west-2.amazonaws.com</Port>
+    <Port name="33967">england-cm02-nlb-b184846026c3d0a5.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="S3 DOCS">
+    <Port name="443">england-cm02-nlb-docs-1f529b67124bb415.elb.eu-west-2.amazonaws.com</Port>
+   </Site>
+   <Site name="EmisConnect">
+    <Port name="33956">emisconnectapps.white.local</Port>
+   </Site>
+   <Site name="GPES">
+    <Port name="33989">gpescenapp.white.local</Port>
+   </Site>
+   <Site name="EmisConnectAPI">
+    <Port name="8085">emisconnectapi.emishosting.com</Port>
+   </Site>
+  </Location>
+ </Domain>
+</PortCheck>

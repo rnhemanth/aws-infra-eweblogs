@@ -1,0 +1,847 @@
+﻿<SQL>
+<!--http://sqlserverbuilds.blogspot.co.uk/-->
+<!--2019-->
+ <Version>
+  <Name>15.00.4345</Name>
+  <Description>5031908 Cumulative update 24 (CU24) for SQL Server 2019 </Description>
+ </Version>
+ <Version>
+  <Name>15.00.4335</Name>
+  <Description>5030333 Cumulative update 23 (CU23) for SQL Server 2019 </Description>
+ </Version>
+ <Version>
+  <Name>15.00.4322</Name>
+  <Description>5027702 Cumulative update 22 (CU22) for SQL Server 2019 </Description>
+ </Version>
+ <Version>
+  <Name>15.00.4316</Name>
+  <Description>5025808 Cumulative update 21 (CU21) for SQL Server 2019 </Description>
+ </Version>
+ <Version>
+  <Name>15.00.4312</Name>
+  <Description>5024276 Cumulative update 20 (CU20) for SQL Server 2019</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4298</Name>
+  <Description>5023049 Cumulative update 19 (CU19) for SQL Server 2019</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4261</Name>
+  <Description>5017593 Cumulative update 18 (CU18) for SQL Server 2019</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4249</Name>
+  <Description>5016394 Cumulative update 17 (CU17) for SQL Server 2019</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4236</Name>
+  <Description>5014353 Security update for SQL Server 2019 CU16: June 14, 2022</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4223</Name>
+  <Description>5011644 Cumulative update 16 (CU16) for SQL Server 2019</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4198</Name>
+  <Description>5008996 Cumulative update 15 (CU15) for SQL Server 2019</Description>
+ </Version>
+ <Version>
+  <Name>15.00.4188</Name>
+  <Description>5007182 Cumulative update 14 (CU14) for SQL Server 2019</Description>
+ </Version>
+<!--2016-->
+ <Version>
+  <Name>13.00.200.172</Name>
+  <Description>Microsoft SQL Server 2016 Community Technology Preview 2 (CTP2)</Description>
+ </Version>
+<!--2014-->
+ <Version>
+  <Name>12.00.6433</Name>
+  <Description>4583462 Security update for SQL Server 2014 SP3 CU4: January 12, 2021</Description>
+ </Version>
+ <Version>
+  <Name>12.00.4422</Name>
+  <Description>3075950 Cumulative update package 2 (CU2) for SQL Server 2014 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>12.00.4416</Name>
+  <Description>3067839 Cumulative update package 1 (CU1) for SQL Server 2014 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>12.00.4100</Name>
+  <Description>SQL Server 2014 Service Pack 1 (SP1)</Description>
+ </Version>
+ <Version>
+  <Name>12.00.4050</Name>
+  <Description>SQL Server 2014 Service Pack 1 (SP1) [withdrawn]</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2506</Name>
+  <Description>3063054 Update enables Premium Storage support for Data files on Azure Storage and resolves backup failures</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2505</Name>
+  <Description>3052167 FIX: Error 1205 when you execute parallel query that contains outer join operators in SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2504</Name>
+  <Description>2999809 FIX: Poor performance when a query contains table joins in SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2495</Name>
+  <Description>3046038 Cumulative update package 7 (CU7) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2488</Name>
+  <Description>3048751 FIX: Deadlock cannot be resolved automatically when you run a SELECT query that can result in a parallel batch-mode scan</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2485</Name>
+  <Description>3043788 An on-demand hotfix update package is available for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2480</Name>
+  <Description>3031047 Cumulative update package 6 (CU6) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2474</Name>
+  <Description>3034679 FIX: AlwaysOn availability groups are reported as NOT SYNCHRONIZING</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2472</Name>
+  <Description>3032087 FIX: Cannot show requested dialog after you connect to the latest SQL Database Update V12 (preview) with SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2464</Name>
+  <Description>3024815 Large query compilation waits on RESOURCE_SEMAPHORE_QUERY_COMPILE in SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2456</Name>
+  <Description>3011055 Cumulative update package 5 (CU5) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2436</Name>
+  <Description>3014867 FIX: "Remote hardening failure" exception cannot be caught and a potential data loss when you use SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2430</Name>
+  <Description>2999197 Cumulative update package 4 (CU4) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2423</Name>
+  <Description>3007050 FIX: RTDATA_LIST waits when you run natively stored procedures that encounter expected failures in SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2405</Name>
+  <Description>2999809 FIX: Poor performance when a query contains table joins in SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2402</Name>
+  <Description>2984923 Cumulative update package 3 (CU3) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2381</Name>
+  <Description>2977316 MS14-044: Description of the security update for SQL Server 2014 (QFE)</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2370</Name>
+  <Description>2967546 Cumulative update package 2 (CU2) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2342</Name>
+  <Description>2931693 Cumulative update package 1 (CU1) for SQL Server 2014</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2254</Name>
+  <Description>2977315 MS14-044: Description of the security update for SQL Server 2014 (GDR)</Description>
+ </Version>
+ <Version>
+  <Name>12.00.2000</Name>
+  <Description>SQL Server 2014 RTM</Description>
+ </Version>
+ <Version>
+  <Name>12.00.1524</Name>
+  <Description>Microsoft SQL Server 2014 Community Technology Preview 2 (CTP2)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.9120</Name>
+  <Description>Microsoft SQL Server 2014 Community Technology Preview 1 (CTP1)</Description>
+ </Version>
+<!--SQL 2012-->
+ <Version>
+  <Name>11.00.7462</Name>
+  <Description>4057116 Description of the security update for SQL Server 2012 SP4 GDR: January 12, 2018 – Security Advisory ADV180002</Description>
+ </Version>
+ <Version>
+  <Name>11.00.7001</Name>
+  <Description>SQL Server 2012 Service Pack 4 (SP4)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5634</Name>
+  <Description>3082561 Cumulative update package 8 (CU8) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5623</Name>
+  <Description>3072100 Cumulative update package 7 (CU7) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5613</Name>
+  <Description>3045319 MS15-058: Description of the security update for SQL Server 2012 Service Pack 2 QFE: July 14, 2015</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5592</Name>
+  <Description>3052468 Cumulative update package 6 (CU6) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5582</Name>
+  <Description>3037255 Cumulative update package 5 (CU5) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5571</Name>
+  <Description>3034679 FIX: AlwaysOn availability groups are reported as NOT SYNCHRONIZING</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5569</Name>
+  <Description>3007556 Cumulative update package 4 (CU4) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5556</Name>
+  <Description>3002049 Cumulative update package 3 (CU3) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5548</Name>
+  <Description>2983175 Cumulative update package 2 (CU2) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5532</Name>
+  <Description>2976982 Cumulative update package 1 (CU1) for SQL Server 2012 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5522</Name>
+  <Description>2969896 FIX: Data loss in clustered index occurs when you run online build index in SQL Server 2012 (Hotfix for SQL2012 SP2)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.5058</Name>
+  <Description>SQL Server 2012 Service Pack 2 (SP2)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3492</Name>
+  <Description>3052476 Cumulative update package 16 (CU16) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3487</Name>
+  <Description>3038001 Cumulative update package 15 (CU15) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3486</Name>
+  <Description>3023636 Cumulative update package 14 (CU14) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3460</Name>
+  <Description>2977325 MS14-044: Description of the security update for SQL Server 2012 Service Pack 1 (QFE)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3482</Name>
+  <Description>3002044 Cumulative update package 13 (CU13) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3470</Name>
+  <Description>2991533 Cumulative update package 12 (CU12) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3449</Name>
+  <Description>2975396 Cumulative update package 11 (CU11) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3437</Name>
+  <Description>2969896 FIX: Data loss in clustered index occurs when you run online build index in SQL Server 2012 (Hotfix for SQL2012 SP1)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3431</Name>
+  <Description>2954099 Cumulative update package 10 (CU10) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3412</Name>
+  <Description>2931078 Cumulative update package 9 (CU9) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3401</Name>
+  <Description>2917531 Cumulative update package 8 (CU8) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3393</Name>
+  <Description>2894115 Cumulative update package 7 (CU7) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.900</Name>
+  <Description>Microsoft SQL Server 2012 With Power View For Multidimensional Models Customer Technology Preview (CTP3)s</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3381</Name>
+  <Description>2874879 Cumulative update package 6 (CU6) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3373</Name>
+  <Description>2861107 Cumulative update package 5 (CU5) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3368</Name>
+  <Description>2833645 Cumulative update package 4 (CU4) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3350</Name>
+  <Description>2832017 FIX: You cant create or open SSIS projects or maintenance plans after you apply Cumulative Update 3 for SQL Server 2012 SP1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3349</Name>
+  <Description>2812412 Cumulative update package 3 (CU3) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3339</Name>
+  <Description>2790947 Cumulative update package 2 (CU2) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3335</Name>
+  <Description>2800050 FIX: Component installation process fails after you install SQL Server 2012 SP1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3321</Name>
+  <Description>2765331 Cumulative update package 1 (CU1) for SQL Server 2012 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3128</Name>
+  <Description>2793634 Windows Installer starts repeatedly after you install SQL Server 2012 SP1</Description>
+ </Version>
+ <Version>
+  <Name>11.00.3000</Name>
+  <Description>SQL Server 2012 Service Pack 1 (SP1)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2845</Name>
+  <Description>SQL Server 2012 Service Pack 1 Customer Technology Preview 4 (CTP4)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2809</Name>
+  <Description>SQL Server 2012 Service Pack 1 Customer Technology Preview 3 (CTP3)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2420</Name>
+  <Description>2891666 Cumulative update package 10 (CU10) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2419</Name>
+  <Description>2867319 Cumulative update package 9 (CU9) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2410</Name>
+  <Description>2844205 Cumulative update package 8 (CU8) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2405</Name>
+  <Description>2823247 Cumulative update package 7 (CU7) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2401</Name>
+  <Description>2728897 Cumulative update package 6 (CU6) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2395</Name>
+  <Description>2777772 Cumulative update package 5 (CU5) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2383</Name>
+  <Description>2758687 Cumulative update package 4 (CU4) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2376</Name>
+  <Description>Microsoft Security Bulletin MS12-070</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2332</Name>
+  <Description>2723749 Cumulative update package 3 (CU3) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2325</Name>
+  <Description>2703275 Cumulative update package 2 (CU2) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2316</Name>
+  <Description>2679368 Cumulative update package 1 (CU1) for SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2214</Name>
+  <Description>2685308 FIX: SSAS uses only 20 cores in SQL Server 2012 Business Intelligence</Description>
+ </Version>
+ <Version>
+  <Name>11.00.2100</Name>
+  <Description>SQL Server 2012 RTM</Description>
+ </Version>
+ <Version>
+  <Name>11.00.1913</Name>
+  <Description>Microsoft SQL Server 2012 Release Candidate 1 (RC1)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.1750</Name>
+  <Description>Microsoft SQL Server 2012 Release Candidate 0 (RC0)</Description>
+ </Version>
+ <Version>
+  <Name>11.00.1440</Name>
+  <Description>Microsoft SQL Server 2012 (codename Denali) Community Technology Preview 3 (CTP3)</Description>
+ </Version>
+ <Version>
+ <Name>11.00.1103</Name>
+  <Description>Microsoft SQL Server 2012 (codename Denali) Community Technology Preview 1 (CTP1)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.6525</Name>
+  <Description>3033860 An on-demand hotfix update package is available for SQL Server 2008 R2 Service Pack 3 (SP3)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.6000</Name>
+  <Description>SQL Server 2008 R2 Service Pack 3 (SP3)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4331</Name>
+  <Description>2987585 Restore Log with Standby Mode on an Advanced Format disk may cause a 9004 error in SQL Server 2008 R2 or SQL Server 2012</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4321</Name>
+  <Description>2977319 MS14-044: Description of the security update for SQL Server 2008 R2 Service Pack 2 (QFE)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4319</Name>
+  <Description>2967540 Cumulative update package 13 (CU13) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4305</Name>
+  <Description>2938478 Cumulative update package 12 (CU12) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4302</Name>
+  <Description>2926028 Cumulative update package 11 (CU11) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4297</Name>
+  <Description>2908087 Cumulative update package 10 (CU10) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4295</Name>
+  <Description>2887606 Cumulative update package 9 (CU9) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4290</Name>
+  <Description>2871401 Cumulative update package 8 (CU8) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4286</Name>
+  <Description>2844090 Cumulative update package 7 (CU7) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4285</Name>
+  <Description>2830140 Cumulative update package 6 (CU6) for SQL Server 2008 R2 Service Pack 2 (updated)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4279</Name>
+  <Description>2830140 Cumulative update package 6 (CU6) for SQL Server 2008 R2 Service Pack 2 (replaced)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4276</Name>
+  <Description>2797460 Cumulative update package 5 (CU5) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4270</Name>
+  <Description>2777358 Cumulative update package 4 (CU4) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4266</Name>
+  <Description>2754552 Cumulative update package 3 (CU3) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4263</Name>
+  <Description>2740411 Cumulative update package 2 (CU2) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4260</Name>
+  <Description>2720425 Cumulative update package 1 (CU1) for SQL Server 2008 R2 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.4000</Name>
+  <Description>SQL Server 2008 R2 Service Pack 2 (SP2)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.3720</Name>
+  <Description>SQL Server 2008 R2 Service Pack 2 Community Technology Preview (CTP)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2817</Name>
+  <Description>2703282 Cumulative update package 7 (CU7) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2811</Name>
+  <Description>2679367 Cumulative update package 6 (CU6) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2807</Name>
+  <Description>2675522 FIX: Access violation when you run DML statements against a table that has partitioned indexes in SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2806</Name>
+  <Description>2659694 Cumulative update package 5 (CU5) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2799</Name>
+  <Description>2633357 FIX: Non-yielding Scheduler error might occur when you run a query that uses the CHARINDEX function in SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2796</Name>
+  <Description>2633146 Cumulative update package 4 (CU4) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2789</Name>
+  <Description>2591748 Cumulative update package 3 (CU3) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2776</Name>
+  <Description>2606883 FIX: Slow performance when an AFTER trigger runs on a partitioned table in SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2772</Name>
+  <Description>2567714 Cumulative update package 2 (CU2) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2769</Name>
+  <Description>2544793 Cumulative update package 1 (CU1) for SQL Server 2008 R2 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.50.2500</Name>
+  <Description>SQL Server 2008 R2 Service Pack 1 (SP1)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1817</Name>
+  <Description>2703280 Cumulative update package 14 (CU14) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1815</Name>
+  <Description>2679366 Cumulative update package 13 (CU13) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1809</Name>
+  <Description>2633145 Cumulative update package 11 (CU11) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1807</Name>
+  <Description>2591746 Cumulative update package 10 (CU10) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1804</Name>
+  <Description>2567713 Cumulative update package 9 (CU9) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1800</Name>
+  <Description>2574699 FIX: Database data files might be incorrectly marked as sparse in SQL Server 2008 R2 or in SQL Server 2008 even when the physical files are marked as not sparse in the file system</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1797</Name>
+  <Description>2534352 Cumulative update package 8 (CU8) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1790</Name>
+  <Description>2494086 MS11-049: Description of the security update for SQL Server 2008 R2 QFE: June 14 2011</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1777</Name>
+  <Description>2507770 Cumulative update package 7 (CU7) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1769</Name>
+  <Description>2520808 FIX: Non-yielding scheduler error when you run a query that uses a TVP in SQL Server 2008 or in SQL Server 2008 R2 if SQL Profiler or SQL Server Extended Events is used</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1765</Name>
+  <Description>2489376 Cumulative update package 6 (CU6) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1753</Name>
+  <Description>2438347 Cumulative update package 5 (CU5) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1746</Name>
+  <Description>2345451 Cumulative update package 4 (CU4) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1734</Name>
+  <Description>2261464 Cumulative update package 3 (CU3) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1720</Name>
+  <Description>2072493 Cumulative update package 2 (CU2) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1702</Name>
+  <Description>981355 Cumulative update package 1 (CU1) for SQL Server 2008 R2</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1617</Name>
+  <Description>2494088 MS11-049: Description of the security update for SQL Server 2008 R2 GDR: June 14 2011</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1600</Name>
+  <Description>SQL Server 2008 R2 RTM</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1352</Name>
+  <Description>Microsoft SQL Server 2008 R2 November Community Technology Preview (CTP)</Description>
+ </Version>
+ <Version>
+  <Name>10.50.1092</Name>
+  <Description>Microsoft SQL Server 2008 R2 August Community Technology Preview (CTP)</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5788</Name>
+  <Description>2715953 Cumulative update package 6 (CU6) for SQL Server 2008 Service Pack 3</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5785</Name>
+  <Description>2696626 Cumulative update package 5 (CU5) for SQL Server 2008 Service Pack 3</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5775</Name>
+  <Description>2673383 Cumulative update package 4 (CU4) for SQL Server 2008 Service Pack 3</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5770</Name>
+  <Description>2648098 Cumulative update package 3 (CU3) for SQL Server 2008 Service Pack 3</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5768</Name>
+  <Description>2633143 Cumulative update package 2 (CU2) for SQL Server 2008 Service Pack 3</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5766</Name>
+  <Description>2617146 Cumulative update package 1 (CU1) for SQL Server 2008 Service Pack 3</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5500</Name>
+  <Description>SQL Server 2008 Service Pack 3 (SP3)</Description>
+ </Version>
+ <Version>
+  <Name>10.00.5416</Name>
+  <Description>SQL Server 2008 Service Pack 3 CTP</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4333</Name>
+  <Description>2715951 Cumulative update package 11 (CU11) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4332</Name>
+  <Description>2696625 Cumulative update package 10 (CU10) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4330</Name>
+  <Description>2673382 Cumulative update package 9 (CU9) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4326</Name>
+  <Description>2648096 Cumulative update package 8 (CU8) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4323</Name>
+  <Description>2617148 Cumulative update package 7 (CU7) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4321</Name>
+  <Description>2582285 Cumulative update package 6 (CU6) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4316</Name>
+  <Description>2555408 Cumulative update package 5 (CU5) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4285</Name>
+  <Description>2527180 Cumulative update package 4 (CU4) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4279</Name>
+  <Description>2498535 Cumulative update package 3 (CU3) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4272</Name>
+  <Description>2467239 Cumulative update package 2 (CU2) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4266</Name>
+  <Description>2289254 Cumulative update package 1 (CU1) for SQL Server 2008 Service Pack 2</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4064</Name>
+  <Description>2494089 MS11-049: Description of the security update for SQL Server 2008 Service Pack 2 GDR: June 14 2011</Description>
+ </Version>
+ <Version>
+  <Name>10.00.4000</Name>
+  <Description>SQL Server 2008 Service Pack 2 (SP2)</Description>
+ </Version>
+ <Version>
+  <Name>10.00.3798</Name>
+  <Description>SQL Server 2008 Service Pack 2 CTP</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2850</Name>
+  <Description>2582282 Cumulative update package 16 (CU16) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2847</Name>
+  <Description>2555406 Cumulative update package 15 (CU15) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2821</Name>
+  <Description>2527187 Cumulative update package 14 (CU14) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2816</Name>
+  <Description>2497673 Cumulative update package 13 (CU13) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2808</Name>
+  <Description>2467236 Cumulative update package 12 (CU12) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2804</Name>
+  <Description>2413738 Cumulative update package 11 (CU11) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2799</Name>
+  <Description>2279604 Cumulative update package 10 (CU10) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2789</Name>
+  <Description>2083921 Cumulative update package 9 (CU9) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2787</Name>
+  <Description>2231277 FIX: The Reporting Services service stops unexpectedly after you apply SQL Server 2008 SP1 CU 7 or CU8</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2775</Name>
+  <Description>981702 Cumulative update package 8 (CU8) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2766</Name>
+  <Description>979065 Cumulative update package 7 (CU7) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2757</Name>
+  <Description>977443 Cumulative update package 6 (CU6) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2746</Name>
+  <Description>975977 Cumulative update package 5 (CU5) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2740</Name>
+  <Description>976761 FIX: Error message when you perform a rolling upgrade in a SQL Server 2008 cluster : 18401 Login failed for user SQLTEST\AgentService. Reason: Server is in script upgrade mode. Only administrator can connect at this time.[SQLState 42000]</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2734</Name>
+  <Description>973602 Cumulative update package 4 (CU4) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2723</Name>
+  <Description>971491 Cumulative update package 3 (CU3) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2714</Name>
+  <Description>970315 Cumulative update package 2 (CU2) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2712</Name>
+  <Description>970507 FIX: Error message in SQL Server 2008 when you run an INSERT SELECT statement on a table: Violation of PRIMARY KEY constraint 'PrimaryKey'. Cannot insert duplicate key in object 'TableName'</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2710</Name>
+  <Description>969099 Cumulative update package 1 (CU1) for SQL Server 2008 Service Pack 1</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2573</Name>
+  <Description>2494096 MS11-049: Description of the security update for SQL Server 2008 Service Pack 1 GDR: June 14 2011</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2531</Name>
+  <Description>SQL Server 2008 Service Pack 1 (SP1)</Description>
+ </Version>
+ <Version>
+  <Name>10.00.2520</Name>
+  <Description>SQL Server 2008 Service Pack 1 - CTP</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1835</Name>
+  <Description>979064 Cumulative update package 10 (CU10) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1828</Name>
+  <Description>977444 Cumulative update package 9 (CU9) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1823</Name>
+  <Description>975976 Cumulative update package 8 (CU8) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1818</Name>
+  <Description>973601 Cumulative update package 7 (CU7) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1812</Name>
+  <Description>971490 Cumulative update package 6 (CU6) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1806</Name>
+  <Description>969531 Cumulative update package 5 (CU5) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1798</Name>
+  <Description>963036 Cumulative update package 4 (CU4) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1787</Name>
+  <Description>960484 Cumulative update package 3 (CU3) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1779</Name>
+  <Description>958186 Cumulative update package 2 (CU2) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1771</Name>
+  <Description>958611 FIX: You may receive incorrect results when you run a query that references three or more tables in the FROM clause in SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1763</Name>
+  <Description>956717 Cumulative update package 1 (CU1) for SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1750</Name>
+  <Description>956718 FIX: A MERGE statement may not enforce a foreign key constraint when the statement updates a unique key column that is not part of a clustering key that has a single row as the update source in SQL Server 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1600</Name>
+  <Description>SQL Server 2008 RTM</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1442</Name>
+  <Description>Microsoft SQL Server 2008 RC0</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1300</Name>
+  <Description>Microsoft SQL Server 2008 CTP February 2008</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1075</Name>
+  <Description>Microsoft SQL Server 2008 CTP November 2007</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1049</Name>
+  <Description>SQL Server 2008 CTP July 2007</Description>
+ </Version>
+ <Version>
+  <Name>10.00.1019</Name>
+  <Description>SQL Server 2008 CTP June 2007</Description>
+ </Version>
+</SQL>
