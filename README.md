@@ -52,6 +52,19 @@ aws-infra-deploy-eweblogs/
 ### **1. Bootstrap (One-time setup)**
 ```bash
 # Create GitHub deployer IAM role
+
+# Using GitHub Actions (Recommended)
+1. Go to GitHub Actions → "Manual Bootstrap - Create GitHub Deployer Role"
+2. Run workflow with inputs:
+   - Environment: dev
+   - Service name: eweblogs
+   - Service location: england
+   - AWS region: eu-west-2
+   - GitHub repository name: aws-infra-deploy-eweblogs
+   - Stack identifier: eweblogs-platform
+3. Copy the output DEPLOYER_ROLE_ARN to GitHub secrets
+
+# Alternative: Local execution (if needed)
 make bootstrap-dev
 
 # Copy the output DEPLOYER_ROLE_ARN to GitHub secrets
