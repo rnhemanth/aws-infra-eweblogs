@@ -1,366 +1,265 @@
-# EWebLogs Network Addons Module
+# EWebLogs Network Infrastructure Module
 
-This Terraform module completes the network connectivity setup by configuring Transit Gateway routes and Route53 resolver rule associations. It must be deployed after the network module and is essential for domain connectivity.
+This Terraform module creates the foundational network infrastructure for the EWebLogs platform, including VPC, subnets, security groups, and connectivity components.
 
-## 🎯 Purpose
+## 🏗️ What This Module Creates
 
-The addons module bridges the gap between basic network infrastructure and full domain connectivity by:
+### Core Networking
+- **VPC**: Isolated network environment with DNS support
+- **Subnets**: Private subnets for secure instance placement
+- **Route Tables**: Routing configuration for traffic flow
+- **DHCP Options**: Custom DNS and domain configuration
+- **Flow Logs**: Network traffic monitoring and security
 
-1. **Creating TGW Routes**: Enables traffic flow to shared services for domain operations
-2. **Associating Route53 Rules**: Provides DNS resolution for domain names
-3. **Completing Network Setup**: Makes the VPC ready for domain-joined instances
+### Connectivity
+- **Transit Gateway Attachment**: Connection to backbone TGW for domain services
+- **VPC Endpoints**: Private AWS service access (S3, SSM, EC2, KMS, Secrets Manager)
+- **DNS Configuration**: Integration with shared services domain resolution
 
-## 🏗️ What This Module Does
+### Security
+- **Security Groups**: Network-level security controls
+  - Standard ports (common services)
+  - Bastion access (administrative)
+  - SQL connectivity (database services)
+- **KMS Keys**: Encryption for infrastructure components
+- **Network ACLs**: Additional network security layer
 
-### Transit Gateway Routing
-- **Default Route Creation**: Adds `0.0.0.0/0` route to Transit Gateway backbone
-- **Route Table Updates**: Configures all route tables in the VPC
-- **Conditional Deployment**: Only creates routes when TGW attachment is available
+### Storage & Secrets
+- **S3 Buckets**: Setup files and software distribution
+- **Secrets Manager**: Domain credentials for cross-account access
+- **SSM Parameters**: Configuration values for other modules
 
-### Route53 Resolver Integration
-- **Rule Association**: Associates Route53 resolver rules with the VPC
-- **Domain Resolution**: Enables resolution of shared services domain names
-- **DNS Forwarding**: Configures proper DNS forwarding for domain operations
+## 📋 Network Design
 
-## 📋 Prerequisites
+### CIDR Allocation
+- **VPC CIDR**: `100.68.58.192/26` (64 total IPs)
+- **Subnet**: `100.68.58.192/27` (32 usable IPs)
+- **Availability Zone**: `eu-west-2c` (euw2-az1)
 
-**Critical**: This module depends on successful network module deployment:
-
-1. **VPC Deployed**: Network module must be successfully deployed
-2. **TGW Attachment**: Transit Gateway attachment must be in "available" state
-3. **Route53 Rules**: Resolver rules must exist in shared services
-4. **GitHub Actions**: Submodule issue must be resolved for deployment
-
-## ✅ **Deployment Status: COMPLETED**
-
-The addons module has been successfully deployed after resolving several technical challenges:
-
-### **Issues Resolved During Deployment:**
-
-1. **TGW Attachment Data Source Fix**
-   - **Problem**: Terraform couldn't find TGW attachment due to naming mismatch
-   - **Root Cause**: Module appended VPC ID suffix to attachment name
-   - **Solution**: Updated data source filter to match actual name pattern
-   - **Result**: `dev-core-net-tgw-attach-eweb-ibi-vpc-[vpc-id]` correctly identified
-
-2. **Route53 Resolver Permissions**
-   - **Problem**: IAM permissions insufficient for resolver rule association
-   - **Missing Permission**: `route53resolver:GetResolverRuleAssociation`
-   - **Solution**: Updated GitHub deployer role with additional Route53 permissions
-   - **Result**: Module can now associate resolver rules with VPC
-
-3. **Bootstrap IAM Update**
-   - **Action**: Re-ran bootstrap process to apply updated IAM permissions
-   - **Result**: GitHub Actions workflow now has full permissions
-
-### **What's Now Working:**
-- ✅ Route53 resolver rule `rslvr-rr-4b6ebb37adf24a43b` associated with VPC
-- ✅ TGW routes configured for `0.0.0.0/0` → Transit Gateway backbone
-- ✅ Network infrastructure ready for EC2 domain-joined instances
-
-### **Current Status:**
-- **TGW Attachment**: `pending-acceptance` - requires manual acceptance in AWS Console
-- **Route53 Resolution**: Active for `dev.shared-services.emis-web.com`
-- **Next Step**: Accept TGW attachment, then deploy EC2 instances
-
-## 🚀 Deployment (When GitHub Actions Fixed)
-
-### Step 1: Verify Prerequisites
-```bash
-# Ensure network module is deployed
-aws ec2 describe-transit-gateway-attachments \
-  --filters "Name=state,Values=available"
-
-# Check VPC exists
-aws ec2 describe-vpcs \
-  --filters "Name=cidr-block,Values=100.68.58.192/26"
-```
-
-### Step 2: Deploy Addons
-```bash
-# Use GitHub Actions workflow
-.github/workflows/dev-deploy-infrastructure.yml
-# Select: network-addons
-```
-
-### Step 3: Verify Deployment
-```bash
-# Check routes are created
-aws ec2 describe-route-tables \
-  --filters "Name=route.destination-cidr-block,Values=0.0.0.0/0"
-
-# Verify Route53 associations
-aws route53resolver list-resolver-rule-associations \
-  --filters "Name=Status,Values=COMPLETE"
-```
-
-## 📁 Module Structure
-
-```
-eweblogs/terraform/addons/
-├── main.tf           # TGW routes and Route53 associations
-├── variables.tf      # Input parameters
-├── terragrunt.hcl   # Terragrunt configuration
-└── README.md        # This documentation
-```
-
-## 🔧 How It Works
-
-### Transit Gateway Route Logic
-```hcl
-# Finds TGW attachment
-data "aws_ec2_transit_gateway_attachment" "tgw_backbone" {
-  filter {
-    name   = "transit-gateway-id"
-    values = [var.tgw_id_backbone]
-  }
-  filter {
-    name   = "tag:Name"
-    values = ["${var.name.environment}-core-net-tgw-attach-${var.name.service}-${var.name.identifier}"]
-  }
-}
-
-# Creates routes only when attachment is available
-resource "aws_route" "tgw_backbone_route" {
-  for_each = { 
-    for id in data.aws_route_tables.this.ids : id => id 
-    if data.aws_ec2_transit_gateway_attachment.tgw_backbone.state == "available" 
-  }
-
-  route_table_id         = each.value
-  destination_cidr_block = "0.0.0.0/0"
-  transit_gateway_id     = var.tgw_id_backbone
-}
-```
-
-### Route53 Association Logic
-```hcl
-# Associates resolver rules with VPC
-resource "aws_route53_resolver_rule_association" "this" {
-  for_each         = var.route53_resolver_rules
-  resolver_rule_id = each.value.rule_id
-  vpc_id           = data.aws_vpc.this.id
-}
-```
-
-## 📊 Network Flow After Deployment
-
+### Connectivity Architecture
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                EWebLogs VPC                             │
+│                    EWebLogs VPC                         │
+│                100.68.58.192/26                        │
 │                                                         │
-│  ┌─────────────┐  ┌─────────────┐                     │
-│  │   SIS001    │  │   SRS001    │                     │
-│  │    SSIS     │  │    SSRS     │                     │
-│  └─────┬───────┘  └─────┬───────┘                     │
-│        │                │                              │
-│        └────────┬───────┘                              │
-│                 │                                      │
-│     ┌───────────▼──────────────┐                      │
-│     │     Route Tables         │                      │
-│     │ 0.0.0.0/0 → TGW Backbone │  ← Addons Module    │
-│     └───────────┬──────────────┘                      │
-└─────────────────┼──────────────────────────────────────┘
-                  │
-                  ▼ Traffic to Domain/DNS
+│  ┌─────────────────────────────────────────────────┐   │
+│  │         ewl-2a Subnet                           │   │
+│  │      100.68.58.192/27                          │   │
+│  │                                                 │   │
+│  │  ┌─────────────┐  ┌─────────────┐             │   │
+│  │  │   SIS001    │  │   SRS001    │             │   │
+│  │  │    SSIS     │  │    SSRS     │             │   │
+│  │  └─────────────┘  └─────────────┘             │   │
+│  └─────────────────────────────────────────────────┘   │
+│                          │                              │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │              VPC Endpoints                      │   │
+│  │         (S3, SSM, EC2, KMS, etc.)              │   │
+│  └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+                           │
+                           │ TGW Attachment
+                           ▼
 ┌─────────────────────────────────────────────────────────┐
 │              Transit Gateway Backbone                   │
 │                                                         │
 │  ┌─────────────────┐    ┌─────────────────┐           │
-│  │ Shared Services │    │ Route53 Resolver│           │
-│  │   (Domain)      │    │    (DNS)        │  ← Addons │
-│  └─────────────────┘    └─────────────────┘    Module  │
+│  │ Shared Services │    │   Other VPCs    │           │
+│  │   (Domain/DNS)  │    │                 │           │
+│  └─────────────────┘    └─────────────────┘           │
 └─────────────────────────────────────────────────────────┘
 ```
 
-## 🔍 Configuration Variables
+## 🔐 Security Groups
+
+### Standard Security Group
+**Purpose**: Common ports and services for all instances
+
+**Key Rules**:
+- HTTPS (443) within VPC
+- DNS (53) to Route53 resolvers
+- RDP (3389) from Delinea PAM
+- Active Directory communication to shared services
+- WSUS connectivity for patching
+
+### Bastion Security Group
+**Purpose**: Administrative access controls
+
+**Key Rules**:
+- RDP access to SQL security group
+- Controlled administrative connectivity
+
+### SQL Security Group
+**Purpose**: Database-specific connectivity
+
+**Key Rules**:
+- SQL Server (1433) from authorized sources
+- PowerShell remoting (5985-5986) for management
+- RPC (135) for administrative tools
+- File share access (445) to FSx
+- Connectivity to other SQL environments
+
+## 🛠️ Prerequisites
+
+Before deploying this module:
+
+1. **AWS Account Setup**: Proper IAM permissions and account configuration
+2. **Bootstrap Complete**: GitHub deployer role must be created
+3. **Shared Services**: Domain credentials and cross-account access configured
+4. **Transit Gateway**: Backbone TGW must exist and be accessible
+
+## 🚀 Deployment Process
+
+### Step 1: Prepare Environment
+```bash
+# Set required environment variables
+export AWS_REGION=eu-west-2
+export AWS_ACCOUNT_ID=296062593024
+export ENVIRONMENT=dev
+```
+
+### Step 2: Deploy Network
+```bash
+# Use GitHub Actions workflow
+.github/workflows/dev-deploy-infrastructure.yml
+# Select: network
+```
+
+### Step 3: Verify Deployment
+Check the following components are created:
+- ✅ VPC with correct CIDR
+- ✅ Subnet in correct AZ
+- ✅ Transit Gateway attachment
+- ✅ Security groups with proper rules
+- ✅ VPC endpoints for AWS services
+- ✅ KMS keys for encryption
+- ✅ S3 buckets for setup files
+
+## 📁 Module Structure
+
+```
+eweblogs/terraform/network/
+├── main.tf              # VPC, subnets, TGW attachment
+├── variables.tf         # Input parameters
+├── outputs.tf          # Network resource outputs
+├── data.tf             # Data sources and lookups
+├── kms.tf              # KMS encryption keys
+├── locals.tf           # Local value calculations
+├── s3.tf               # S3 buckets for setup/software
+├── secrets.tf          # Secrets Manager and SSM parameters
+├── sg.tf               # Security group definitions
+├── terragrunt.hcl      # Terragrunt configuration
+└── ssm_inventory.tf.bak # SSM inventory (future use)
+```
+
+## 📤 Key Outputs
+
+The network module provides these outputs for other modules:
+
+### Network Information
+- **vpc_id**: VPC identifier for resource placement
+- **subnet_ids**: Subnet information for EC2 deployment
+- **security_group_ids**: Security group references
+- **route_table_ids**: Routing configuration
+
+### Connectivity
+- **vpc_endpoints**: AWS service endpoint information
+- **tgw_attachment**: Transit Gateway attachment details
+
+### Security
+- **kms_key_arn**: Encryption key for other resources
+- **security_groups**: Network security configurations
+
+## 🔧 Configuration Variables
 
 ### Required Variables
-```hcl
-# Transit Gateway backbone ID
-tgw_id_backbone = "tgw-0f28603fcaf843cb9"
+- **ipv4_primary_cidr_block**: VPC CIDR block
+- **tgw_id_backbone**: Transit Gateway ID for connectivity
+- **intra_subnets**: Subnet configuration mapping
+- **name**: Naming convention object (environment, service, identifier)
 
-# VPC CIDR for lookup
-ipv4_primary_cidr_block = "100.68.58.192/26"
+### Security Group Variables
+- **standard_sg_rules_cidr_blocks**: Standard security rules
+- **bastion_sg_rules_cidr_blocks**: Bastion access rules
+- **sql_sg_rules_cidr_blocks**: Database connectivity rules
 
-# Route53 resolver rules to associate
-route53_resolver_rules = {
-  dev_shared-services_emis-web_com = {
-    rule_id = "rslvr-rr-4b6ebb37adf24a43b"
-  }
-}
+### Optional Variables
+- **key_users**: KMS key user permissions
+- **key_administrators**: KMS key admin permissions
+- **domain_credentials**: Domain authentication (if provided)
 
-# Naming convention
-name = {
-  environment = "dev"
-  service     = "eweb"
-  identifier  = "ibi"
-}
-```
+## 🌐 VPC Endpoints
 
-## 📤 Data Sources Used
+Private endpoints for AWS services to avoid internet traffic:
 
-The module uses these data sources to find existing resources:
+| Service | Purpose | Private DNS |
+|---------|---------|-------------|
+| S3 | Software/setup file access | Yes |
+| SSM | Systems Manager operations | Yes |
+| EC2 | Instance management | Yes |
+| KMS | Encryption operations | Yes |
+| Secrets Manager | Credential access | Yes |
+| EC2 Messages | SSM communication | Yes |
+| SSM Messages | SSM communication | Yes |
 
-```hcl
-# Finds the TGW attachment created by network module
-data "aws_ec2_transit_gateway_attachment" "tgw_backbone"
+## 🔄 Post-Deployment
 
-# Locates all route tables in the VPC
-data "aws_route_tables" "this"
+After network deployment is complete:
 
-# Finds the VPC by CIDR block
-data "aws_vpc" "this"
-```
-
-## ✅ Verification Steps
-
-After successful deployment, verify:
-
-### 1. TGW Routes Created
-```bash
-# Check route tables have TGW routes
-aws ec2 describe-route-tables \
-  --route-table-ids $(aws ec2 describe-route-tables \
-    --filters "Name=vpc-id,Values=vpc-xxxxxxxxx" \
-    --query 'RouteTables[].RouteTableId' --output text) \
-  --query 'RouteTables[].Routes[?DestinationCidrBlock==`0.0.0.0/0`]'
-```
-
-### 2. Route53 Associations Active
-```bash
-# Verify resolver rule associations
-aws route53resolver list-resolver-rule-associations \
-  --filters "Name=VPCId,Values=vpc-xxxxxxxxx" \
-  --query 'ResolverRuleAssociations[?Status==`COMPLETE`]'
-```
-
-### 3. Test Domain Connectivity
-```bash
-# From an EC2 instance, test domain resolution
-nslookup shared-services.emis-web.com
-nslookup dev.shared-services.emis-web.com
-```
-
-## 🛠️ Dependencies
-
-### Input Dependencies
-This module requires outputs from the network module:
-- **VPC ID**: For Route53 resolver associations
-- **Route Table IDs**: For TGW route creation
-- **TGW Attachment**: Must be in "available" state
-
-### External Dependencies
-- **Transit Gateway**: Backbone TGW must exist and be accessible
-- **Route53 Resolver Rules**: Must exist in shared services account
-- **Cross-Account Permissions**: Proper IAM roles for TGW access
+1. **Verify TGW Attachment**: Ensure attachment is in "available" state
+2. **Test Connectivity**: Validate VPC endpoint accessibility
+3. **Security Validation**: Review security group rules
+4. **Deploy Addons**: Run network-addons module for TGW routes
+5. **Deploy EC2**: Proceed with instance deployment
 
 ## 🐛 Troubleshooting
 
-### GitHub Actions Issues
-**Problem**: terragrunt-apply action not found
-```bash
-# Check submodule status
-git submodule status
-# Should show github-runner on main branch, not rebuild-script-22
+### Common Network Issues
 
-# Try manual submodule fix
-git submodule update --remote github-runner
-git submodule foreach git checkout main
-```
+**TGW Attachment Failed:**
+- Verify TGW ID is correct
+- Check cross-account permissions
+- Ensure subnet has available IP addresses
 
-### TGW Route Creation Fails
-**Problem**: Routes not created or in failed state
-```bash
-# Check TGW attachment state
-aws ec2 describe-transit-gateway-attachments \
-  --filters "Name=tag:Name,Values=dev-core-net-tgw-attach-eweb-ibi"
+**VPC Endpoint Issues:**
+- Verify security group allows HTTPS (443)
+- Check route table associations
+- Validate endpoint policies
 
-# Verify TGW permissions
-aws ec2 describe-transit-gateways --transit-gateway-ids tgw-0f28603fcaf843cb9
-```
+**DNS Resolution Problems:**
+- Verify DHCP options are applied
+- Check Route53 resolver configuration
+- Ensure domain credentials are correct
 
-### Route53 Association Fails
-**Problem**: Resolver rule association fails
-```bash
-# Check resolver rule exists
-aws route53resolver list-resolver-rules \
-  --filters "Name=ResolverRuleId,Values=rslvr-rr-4b6ebb37adf24a43b"
+**Security Group Connectivity:**
+- Validate CIDR blocks are correct
+- Check rule precedence and conflicts
+- Verify source/destination configurations
 
-# Verify cross-account sharing
-aws route53resolver list-resolver-rule-associations \
-  --filters "Name=ResolverRuleId,Values=rslvr-rr-4b6ebb37adf24a43b"
-```
 
-### Domain Resolution Not Working
-**Problem**: Can't resolve domain names after deployment
-```bash
-# Check VPC DNS settings
-aws ec2 describe-vpcs --vpc-ids vpc-xxxxxxxxx \
-  --query 'Vpcs[0].{DnsSupport:DnsSupport,DnsHostnames:DnsHostnames}'
+## 🔒 Security Considerations
 
-# Should show both as true
+### Network Security
+- All traffic remains within AWS backbone
+- No internet gateway or NAT gateway for maximum security
+- VPC endpoints prevent internet traversal for AWS services
 
-# Test from instance
-dig @169.254.169.253 shared-services.emis-web.com
-```
+### Encryption
+- All resources encrypted with customer-managed KMS keys
+- Secrets stored in AWS Secrets Manager with encryption
+- Volume encryption enforced at infrastructure level
 
-## 🔄 Rollback Procedure
-
-If deployment fails and rollback is needed:
-
-### 1. Remove TGW Routes
-```bash
-# Manually remove routes if Terraform fails
-aws ec2 delete-route \
-  --route-table-id rtb-xxxxxxxxx \
-  --destination-cidr-block 0.0.0.0/0
-```
-
-### 2. Disassociate Route53 Rules
-```bash
-# Remove resolver rule associations
-aws route53resolver disassociate-resolver-rule \
-  --vpc-id vpc-xxxxxxxxx \
-  --resolver-rule-id rslvr-rr-4b6ebb37adf24a43b
-```
-
-### 3. Run Terraform Destroy
-```bash
-# Use GitHub Actions to destroy addons
-.github/workflows/dev-deploy-infrastructure.yml
-# Or manual terragrunt destroy
-```
-
-## 📋 Checklist for Success
-
-Before marking this module complete, ensure:
-
-- [ ] GitHub Actions submodule issue resolved
-- [ ] Network module successfully deployed
-- [ ] TGW attachment in "available" state
-- [ ] Route53 resolver rules exist in shared services
-- [ ] Cross-account permissions configured
-- [ ] Addons module deploys without errors
-- [ ] TGW routes created in all route tables
-- [ ] Route53 rules associated with VPC
-- [ ] Domain name resolution working
-- [ ] EC2 instances can reach domain controllers
-
-## 🚨 Critical Notes
-
-**⚠️ Order Dependency**: This module MUST be deployed after the network module but BEFORE EC2 instances. Without these routes and DNS associations, EC2 instances cannot join the domain.
-
-**⚠️ GitHub Actions Blocker**: Currently blocked by submodule issue. This is the highest priority item to resolve.
-
-**⚠️ Domain Connectivity**: Without this module, domain join will fail and instances will not be manageable through Active Directory.
-
+### Access Control
+- Security groups implement least-privilege access
+- Cross-account access properly configured
+- Domain integration secured with encrypted credentials
 
 ## 🤝 Support
 
-For addons module issues:
-1. **GitHub Actions**: Check workflow logs for terragrunt-apply errors
-2. **AWS Console**: Verify TGW attachment and Route53 associations
-3. **Network Team**: Contact for TGW backbone configuration
+For network-related issues:
+1. **AWS Console**: Check VPC, TGW, and endpoint status
+2. **CloudTrail**: Review API calls for deployment issues
+3. **VPC Flow Logs**: Analyze network traffic patterns
+4. **GitHub Actions**: Review workflow logs for deployment errors
 
-This module is essential for domain connectivity - prioritize resolving the GitHub Actions issue to unblock infrastructure completion.
+Contact the infrastructure team for network architecture questions or connectivity issues.
