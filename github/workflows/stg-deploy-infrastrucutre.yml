@@ -1,0 +1,67 @@
+name: STG - Deploy - EC2 Infrastructure
+on: workflow_dispatch
+# on:
+#   push:
+#     branches:
+#       - 'main'
+#     paths-ignore:
+#       - 'README.md'
+#       - '.devcontainer/**'
+#       - '.vscode/**'
+
+concurrency: stg
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    environment:
+      name: stg
+    name: Deploy - stg
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+ 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: deploy-role-session
+          aws-region: ${{ vars.AWS_REGION }}
+      - uses: navikt/github-app-token-generator@v1
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+      - name: Pull & update submodules recursively
+        run: |
+          git config --global url."https://token:${GH_TOKEN}@github.com/emisgroup".insteadOf "https://github.com/emisgroup"
+          git config --file=.gitmodules github-runner.url https://token:${GH_TOKEN}@github.com/emisgroup/github-runner.git
+          git submodule update --init --recursive
+        env:
+          GH_TOKEN: ${{ steps.get-token.outputs.token }}
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: sentryone/terraform/
+          framework : terraform
+      - name: Deploy Terragrunt
+        env:
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_REGION : ${{ vars.AWS_REGION }}
+          ENVIRONMENT : ${{ vars.ENVIRONMENT }}
+          GH_TOKEN : ${{ steps.get-token.outputs.token }}
+          TF_VAR_gh_bearer_token: ${{ secrets.RUNNER_BEARER_TOKEN }}
+        uses: ./github-runner/actions/terragrunt-apply
+        with:
+          terraform-folder: "../sentryone/terraform/"
+          terragrunt-config: "../terragrunt.hcl"
