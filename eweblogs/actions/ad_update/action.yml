@@ -1,0 +1,58 @@
+name: pd_ad_update
+description: Action to create the organisational unit, ad users and groups with powershell scripts
+
+inputs:
+  pd-number:
+    description: 'PD number'
+    required: true
+  default-secret-name:
+    description: 'Default secret name'
+    required: true
+  environment-type:
+    description: 'cm (ccmh) or cs (clinical services)'
+    required: true
+    default: 'gp'
+  authaccessgroup:
+    description: 'ad auth access group name'
+    required: true
+  service-account-prefix:
+    description: 'Service account prefix (EWL, EWEBLOGS, etc.)'
+    required: true
+    default: 'EWL'
+  ou-structure:
+    description: 'OU structure for service accounts'
+    required: true
+    default: 'OU=Service_Accounts,OU=EWL,OU=MGMT'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke script CreateADUsers
+      run: >
+         .\scripts\CreateADUsers.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -DefaultSecretName ${{ inputs.default-secret-name }} `
+         -EnvironmentType ${{ inputs.environment-type }} `
+         -ServiceAccountPrefix ${{ inputs.service-account-prefix }} `
+         -OuStructure '${{ inputs.ou-structure }}'
+      shell: powershell
+      working-directory: ./eweblogs
+
+    - name: Invoke script MapADUserGroups
+      run: >
+         .\scripts\MapADUserGroups.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -EnvironmentType ${{ inputs.environment-type }} `
+         -DefaultSecretName ${{ inputs.default-secret-name }} `
+         -authaccessgroup ${{ inputs.authaccessgroup }} `
+         -ServiceAccountPrefix ${{ inputs.service-account-prefix }}
+      shell: powershell
+      working-directory: ./eweblogs
+
+    - name: Invoke script LinkOUGPO
+      run: >
+         .\scripts\LinkOUGPO.ps1 -pdNumber ${{ inputs.pd-number }} `
+         -DefaultSecretName ${{ inputs.default-secret-name }} `
+         -EnvironmentType ${{ inputs.environment-type }} `
+         -ServiceAccountPrefix ${{ inputs.service-account-prefix }} `
+         -OuStructure '${{ inputs.ou-structure }}'
+      shell: powershell
+      working-directory: ./eweblogs
