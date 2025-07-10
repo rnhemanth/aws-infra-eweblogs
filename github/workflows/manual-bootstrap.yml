@@ -1,0 +1,106 @@
+name: Manual Bootstrap - Create GitHub Deployer Role
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (dev/staging/prod)'
+        required: true
+        default: 'dev'
+      service_name:
+        description: 'Service name'
+        required: true
+        default: 'eweblogs'
+      service_location:
+        description: 'Service location'
+        required: true
+        default: 'england'
+      aws_region:
+        description: 'AWS region'
+        required: true
+        default: 'eu-west-2'
+      github_repository_name:
+        description: 'GitHub repository name'
+        required: true
+        default: 'aws-infra-deploy-eweblogs'
+      stack_identifier:
+        description: 'Stack identifier'
+        required: true
+        default: 'eweblogs-platform'
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    environment: dev
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: latest
+
+    - name: Setup Terragrunt
+      run: |
+        echo "Installing Terragrunt..."
+        TERRAGRUNT_VERSION="0.54.20"
+        wget -O /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64
+        chmod +x /tmp/terragrunt
+        sudo mv /tmp/terragrunt /usr/local/bin/terragrunt
+        terragrunt --version
+
+    - name: Configure AWS credentials
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.BOOTSTRAP_AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.BOOTSTRAP_AWS_SECRET_ACCESS_KEY_ID }}
+        AWS_SESSION_TOKEN: ${{ secrets.BOOTSTRAP_AWS_SESSION_TOKEN }}
+        AWS_DEFAULT_REGION: ${{ github.event.inputs.aws_region }}
+      run: |
+        echo "Setting up AWS credentials..."
+        echo "Access Key ID: ${AWS_ACCESS_KEY_ID:0:10}..."
+        echo "Secret Key: ${AWS_SECRET_ACCESS_KEY:0:10}..."
+        echo "Session Token: ${AWS_SESSION_TOKEN:0:20}..."
+        echo "Region: $AWS_DEFAULT_REGION"
+
+    - name: Test AWS Connection
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.BOOTSTRAP_AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.BOOTSTRAP_AWS_SECRET_ACCESS_KEY_ID }}
+        AWS_SESSION_TOKEN: ${{ secrets.BOOTSTRAP_AWS_SESSION_TOKEN }}
+        AWS_DEFAULT_REGION: ${{ github.event.inputs.aws_region }}
+      run: |
+        echo "Testing AWS connection..."
+        aws sts get-caller-identity
+        echo "AWS connection successful!"
+
+    - name: Run Bootstrap
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.BOOTSTRAP_AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.BOOTSTRAP_AWS_SECRET_ACCESS_KEY_ID }}
+        AWS_SESSION_TOKEN: ${{ secrets.BOOTSTRAP_AWS_SESSION_TOKEN }}
+        AWS_DEFAULT_REGION: ${{ github.event.inputs.aws_region }}
+        TERM: xterm-256color
+      working-directory: ./eweblogs/bootstrap
+      run: |
+        echo "=== Starting Bootstrap Process ==="
+        echo "Environment: ${{ github.event.inputs.environment }}"
+        echo "Service: ${{ github.event.inputs.service_name }}"
+        echo "Location: ${{ github.event.inputs.service_location }}"
+        echo "Region: ${{ github.event.inputs.aws_region }}"
+        echo "Repository: ${{ github.event.inputs.github_repository_name }}"
+        echo "Stack ID: ${{ github.event.inputs.stack_identifier }}"
+        
+        # Make setup script executable
+        chmod +x ./setup
+        
+        # Run the bootstrap
+        echo "y" | ./setup bootstrap ${{ github.event.inputs.environment }} ${{ github.event.inputs.service_name }} ${{ github.event.inputs.service_location }} ${{ github.event.inputs.aws_region }} ${{ github.event.inputs.github_repository_name }} ${{ github.event.inputs.stack_identifier }}
+
+    - name: Show Results
+      working-directory: ./eweblogs/bootstrap
+      run: |
+        echo "=== Bootstrap Complete ==="
+        echo "Check the output above for the deployer_role_arn"
+        echo "Copy this ARN to your environment secrets as DEPLOYER_ROLE_ARN"
