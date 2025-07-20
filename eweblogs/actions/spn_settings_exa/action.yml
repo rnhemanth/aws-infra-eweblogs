@@ -1,0 +1,33 @@
+name: spn_settings_exa
+description: Sets the SPN settings for EXA
+
+inputs:
+  full-domain-name:
+    description: 'Full domain name'
+    required: true
+  sql-user:
+    description: 'SQL user'
+    required: true
+  name-prefix:
+    description: 'Name prefix'
+    required: false
+  admin-secret-arn:
+    description: 'Directory Admin secret arn'
+    required: true
+  server-suffix:
+    description: 'Server suffix'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Add SPN to AD
+      run: >
+        .\scripts\spn-add.ps1
+        -fullDomain "${{ inputs.full-domain-name }}"
+        -sqlserviceaccount "${{ inputs.sql-user }}"
+        -prefix "${{ inputs.name-prefix }}${{ inputs.pd-number }}"
+        -AdminSecretName "${{ inputs.admin-secret-arn }}"
+        -serverSuffix "${{ inputs.server-suffix }}"
+      shell: powershell
+      working-directory: ./eweblogs
