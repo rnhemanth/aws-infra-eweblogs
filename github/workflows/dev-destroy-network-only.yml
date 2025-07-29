@@ -1,0 +1,68 @@
+name: DEV - Destroy - Network Only
+on: workflow_dispatch
+
+concurrency: dev-destroy
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ssh_key: ${{ secrets.ssh_key }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  DEPLOYER_ROLE_ARN: ${{ secrets.DEPLOYER_ROLE_ARN }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+  DOMAIN_CREDENTIALS: ${{ secrets.DOMAIN_CREDENTIALS }}
+  FULL_DOMAIN_NAME: ${{ secrets.FULL_DOMAIN_NAME }}
+
+jobs:
+  destroy-network:
+    name: Destroy - DEV Network Infrastructure
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOYER_ROLE_ARN }}
+          role-session-name: destroy-role-session
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - uses: navikt/github-app-token-generator@v1
+        id: get-token
+        with:
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+
+      - name: Pull & update submodules recursively
+        run: |
+          git config --global url.https://token:${{ steps.get-token.outputs.token }}@github.com/emisgroup.insteadOf https://github.com/emisgroup
+          git config --file=.gitmodules github-runner.url https://token:${{ steps.get-token.outputs.token }}@github.com/emisgroup/github-runner.git
+          git submodule update --init --recursive
+        env:
+          GI_TOKEN: ${{ steps.get-token.outputs.token }}
+
+      - name: Run Checkov - Network
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: eweblogs/terraform/network
+          framework: terraform
+
+      - name: Destroy Network Infrastructure
+        env:
+          GI_TOKEN: ${{ steps.get-token.outputs.token }}
+        uses: ./github-runner/actions/terragrunt-destroy
+        with:
+          terraform-folder: "../eweblogs/terraform/network"
+          terragrunt-config: "./terragrunt.hcl"
