@@ -1,0 +1,15 @@
+locals {
+  service          = "eweb"
+  service_location = "england"
+  identifier       = "ibi"
+  owner            = "hosted-platforms"
+  business_unit    = "primary-care"
+  product          = "eweblogs"
+  account_state    = "0"
+  programme_name   = "adelaide"
+  project_name     = "risingsun"
+  project_code     = "prj0011476"
+  iac_source       = "terraform"
+  dr               = "mission_critical"
+  sub_service      = "aws-eweblogs"
+}
